@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
-import frc.robot.commands.Shoot.RobotTurn;
+import frc.robot.commands.Turn_to_Angle_Command;
 
 import static frc.robot.RobotMap.*;
 
@@ -106,7 +106,7 @@ public class OI {
     button1.whenPressed(new Sync_Encoder());
     
     button2.whenHeld(new DriveCommand(Robot.drive));
-    button3.whenPressed(new RobotTurn());
+    button3.whenPressed(new Turn_to_Angle_Command(90)); //Assuming this is in degrees, Could be on another scale
 //button1.whenPressed(new MatchLocANDAbsEncoderCommand(Robot.drive));
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());

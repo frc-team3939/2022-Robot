@@ -74,12 +74,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("BL ABS Encoder Adjusted", drive.backLeft.getAdjustedAbsEncoder());
     SmartDashboard.putNumber("BR ABS Encoder Adjusted", drive.backRight.getAdjustedAbsEncoder());
 
+    SmartDashboard.putNumber("AHS Angle", drive.getAngle());
+
 
 
     // SmartDashboard.putNumber("Left Leg Encoder", legs.getLeftLeg());
     // SmartDashboard.putNumber("Right Leg Encoder", legs.getRightLeg());
-
-    SmartDashboard.putNumber("Angle", Robot.drive.getAngle());
 
     // SmartDashboard.putNumber("Camera Position", cam1.getLocation());
 

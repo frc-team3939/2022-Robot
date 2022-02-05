@@ -100,7 +100,7 @@ public class AutoShootCommand extends CommandBase {
         } 
       }
 
-    Robot.drive.resetEncoder();
+    //Robot.drive.resetEncoder();
     i = 0;
     ii = 0;
     p = 0;

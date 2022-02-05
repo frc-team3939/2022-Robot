@@ -24,7 +24,10 @@ public class Turn_to_Angle_Command extends CommandBase {
 
   public Turn_to_Angle_Command() {
     drive = Robot.drive;
-    d_angle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1)
+      d_angle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    else
+      d_angle = 0;
     addRequirements(drive);
   }
 

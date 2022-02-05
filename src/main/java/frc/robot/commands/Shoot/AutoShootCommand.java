@@ -58,7 +58,10 @@ public class AutoShootCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-      // New logic for autoshoot needed
+    
+
+    
+
   }
 
 

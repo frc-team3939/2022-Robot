@@ -4,6 +4,8 @@
 
 package frc.commandgroups;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Shoot.AutoShootCommand;
@@ -16,6 +18,7 @@ public class AutoShootCommandGroup extends SequentialCommandGroup {
   public AutoShootCommandGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Turn_to_Angle_Command(), new AutoShootCommand());
+    if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1);
+      addCommands(new Turn_to_Angle_Command(), new AutoShootCommand());
   }
 }

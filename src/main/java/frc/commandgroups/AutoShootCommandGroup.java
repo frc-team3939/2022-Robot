@@ -4,7 +4,6 @@
 
 package frc.commandgroups;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Turn_to_Angle_Command;

@@ -8,16 +8,23 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+import static frc.robot.RobotMap.*;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   // TODO Verify real pnumeatic hub IDs when completed
-  DoubleSolenoid solenoidLeft;
-  DoubleSolenoid solenoidRight;
+  public DoubleSolenoid solenoidLeft;
+  public DoubleSolenoid solenoidRight;
+  public TalonSRX shooterMotor;
+
   public IntakeSubsystem() {
     solenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
     solenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 4);
+    shooterMotor = new TalonSRX(shootermotor);
   }
 
   // Below functions fire/retract the pistons that control the intake extension.
@@ -31,6 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
     solenoidRight.set(kReverse);
   }
 
+  
   // TODO add runIntake() and stopIntake() functions when motor controller is apparent
   @Override
   public void periodic() {

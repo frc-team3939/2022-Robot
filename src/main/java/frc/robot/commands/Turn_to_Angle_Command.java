@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
@@ -17,6 +20,15 @@ public class Turn_to_Angle_Command extends CommandBase {
     d_angle = angle;
     addRequirements(drive);
     // Use addRequirements() here to declare subsystem dependencies.
+  }
+
+  public Turn_to_Angle_Command() {
+    drive = Robot.drive;
+    if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1)
+      d_angle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    else
+      d_angle = 0;
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.

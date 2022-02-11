@@ -38,6 +38,7 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     super(new PIDController(RobotMap.turnkP, RobotMap.turnkI, RobotMap.turnkD));
     //Setup for the PID controller
     setOutputRange(-1.0, 1.0);
+    getController().setTolerance(.1);
     //Other Setup
     inverse = false;
     ahrs = new AHRS(SPI.Port.kMXP);
@@ -48,6 +49,7 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     // setSetpoint() - Sets where the PID controller should move the system
     // to
     // enable() - Enables the PID controller.
+    
   }
 
   private void setOutputRange(double d, double e) {
@@ -133,10 +135,33 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return;
   }
 
+//PID Controled Section
+
+  @Override
+  /**
+   * This is the input for the software PID Controler allowing you to turn to an angle
+   */
+  protected double getMeasurement() {
+    return (ahrs.getAngle());
+  }
+
+  @Override
+  protected void useOutput(double output, double setpoint) {
+    pidOut = output;
+    pidSet = setpoint;
+    drive(0, 0, -pidOut, 1, false);
+  }
+
+  /**
+   * 
+   * @param f Forward input (-1, 1)
+   * @param s Strafe input (-1, 1)
+   * @param angle The angle that you want to turn to 
+   * @param speedMult Passes in the Speed multiplier on the Joystick
+   */
   public void gotoAngle(double f, double s, double angle, double speedMult){
     setSetpoint(angle);
     enable();
-    drive(f, s, -pidOut, speedMult, true);
   }
 
   public void PIDdisable(){
@@ -147,31 +172,11 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     ahrs.reset();
   }
 
-  @Override
-  protected void useOutput(double output, double setpoint) {
-    pidOut = output;
-    pidSet = setpoint;
-    
+  public boolean atAngle(){
+    return getController().atSetpoint();
   }
 
-  @Override
-  protected double getMeasurement() {
-    return (ahrs.getAngle());
-  }
- 
-  public void turnWheels90Right() {
-    // TODO testing, edit this
-    frontLeft.setAngle(0.5);
-    frontRight.setAngle(0.5); 
-    frontLeft.setSpeed(0.7);
-    frontRight.setSpeed(0.7);
-  }
-
-public void resetEncoder() {
-}
-
-public void drivePosition(double p, int i) {
-}
+public void drivePosition(double p, int i) {}
 
   /**
    * True will return the distance for the front sensor and false will return the back

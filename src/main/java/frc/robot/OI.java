@@ -4,9 +4,11 @@ import java.lang.Math;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
-import frc.robot.commands.Shoot.RobotTurn;
+import frc.robot.commands.Intake.ExtendIntake;
+import frc.robot.commands.Intake.RetractIntake;
 
 import static frc.robot.RobotMap.*;
 
@@ -106,7 +108,10 @@ public class OI {
     button1.whenPressed(new Sync_Encoder());
     
     button2.whenHeld(new DriveCommand(Robot.drive));
-    button3.whenPressed(new RobotTurn());
+    // button3 open
+    button4.whenPressed(new AutoShootCommandGroup());
+    button5.whenPressed(new ExtendIntake());
+    button6.whenPressed(new RetractIntake());
 //button1.whenPressed(new MatchLocANDAbsEncoderCommand(Robot.drive));
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());

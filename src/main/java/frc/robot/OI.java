@@ -109,7 +109,7 @@ public class OI {
     // Joystick 1 Actions
     button1.whenPressed(new Sync_Encoder()); // sync encoders
     
-    button2.whenHeld(new DriveCommand(Robot.drive)); // unused?
+    // button2.whenHeld(new DriveCommand(Robot.drive)); // unused?
     button3.whenPressed(new Turn_to_Angle_Command(90)); // UNTESTED turn robot to specified angle (degrees)
     button4.whenPressed(new AutoShootCommandGroup()); // autoshoot but no shoot values yet
     button5.whenPressed(new ExtendIntake()); // extend intake

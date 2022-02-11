@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
+import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Intake.ExtendIntake;
+import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RetractIntake;
 
 import static frc.robot.RobotMap.*;
@@ -105,13 +107,16 @@ public class OI {
     button311 = new JoystickButton(stick3, 11);
 
     // Joystick 1 Actions
-    button1.whenPressed(new Sync_Encoder());
+    button1.whenPressed(new Sync_Encoder()); // sync encoders
     
-    button2.whenHeld(new DriveCommand(Robot.drive));
-    // button3 open
-    button4.whenPressed(new AutoShootCommandGroup());
-    button5.whenPressed(new ExtendIntake());
-    button6.whenPressed(new RetractIntake());
+    button2.whenHeld(new DriveCommand(Robot.drive)); // unused?
+    button3.whenPressed(new Turn_to_Angle_Command(90)); // UNTESTED turn robot to specified angle (degrees)
+    button4.whenPressed(new AutoShootCommandGroup()); // autoshoot but no shoot values yet
+    button5.whenPressed(new ExtendIntake()); // extend intake
+    button6.whenPressed(new RetractIntake()); // retract intake
+    button7.whenPressed(new IntakeRunVariableSpeed(1.0)); //FULL SPEED INTAKE
+    button8.whenPressed(new IntakeRunVariableSpeed(0)); // STOP INTAKE
+    button9.whenPressed(new IntakeRunVariableSpeed(-1.0)); // FULL SPEED INTAKE REVERSE
 //button1.whenPressed(new MatchLocANDAbsEncoderCommand(Robot.drive));
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());

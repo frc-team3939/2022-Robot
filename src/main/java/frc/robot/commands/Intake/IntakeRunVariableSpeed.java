@@ -4,21 +4,20 @@
 
 package frc.robot.commands.Intake;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
-import frc.robot.subsystems.IntakeSubsystem;
 
-public class ExtendIntake extends CommandBase {
-  
-  public ExtendIntake() {
-    addRequirements(Robot.intake);  
+public class IntakeRunVariableSpeed extends CommandBase {
+  double speed;
+  public IntakeRunVariableSpeed(double intakeSpeed) {
+    addRequirements(Robot.intake);
+    speed = intakeSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.intake.intakeExtend();
+    Robot.intake.intakeRunSetSpeed(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -28,11 +27,12 @@ public class ExtendIntake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Robot.intake.intakeStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -40,6 +40,8 @@ public class RobotMap {
   public final static int shooterI = 0;
   public final static int shooterD = 0;
 
+  /* Intake Motor ID Placeholder */
+  public final static int intakemotor = 99; //CHANGE
   /* ---- Solenoid Channels ---- */
 
   /* ---- Analog Inputs ---- */

@@ -176,17 +176,7 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return getController().atSetpoint();
   }
 
-  //What is this here for?
-  public void turnWheels90Right() {
-    // TODO testing, edit this
-    frontLeft.setAngle(0.5);
-    frontRight.setAngle(0.5); 
-    frontLeft.setSpeed(0.7);
-    frontRight.setSpeed(0.7);
-  }
-
-public void drivePosition(double p, int i) {
-}
+public void drivePosition(double p, int i) {}
 
   /**
    * True will return the distance for the front sensor and false will return the back

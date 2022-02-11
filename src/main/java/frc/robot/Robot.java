@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
   // public static DrivetrainSubsystem drive;
   public static PID_DrivetrainSubsystem drive;
   public static ShooterSubsystem shooter;
+  public static IntakeSubsystem intake;
   public static OI m_oi;
   // private Ultrasonic sonic = new Ultrasonic(4, 4);
 
@@ -34,6 +36,8 @@ public class Robot extends TimedRobot {
     // CameraServer.startAutomaticCapture(0);
     // shooter = new (subsystem here)
     drive = new PID_DrivetrainSubsystem();
+    intake = new IntakeSubsystem();
+    shooter = new ShooterSubsystem();
     m_oi = new OI();
     CommandScheduler.getInstance().setDefaultCommand(drive, new DriveCommand(drive));
     //SmartDashboard.putNumber("Camera", 1);

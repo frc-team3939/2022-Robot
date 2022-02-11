@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
-import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.RetractIntake;
 
@@ -109,7 +108,7 @@ public class OI {
     button1.whenPressed(new Sync_Encoder());
     
     button2.whenHeld(new DriveCommand(Robot.drive));
-    button3.whenPressed(new Turn_to_Angle_Command(90));
+    // button3 open
     button4.whenPressed(new AutoShootCommandGroup());
     button5.whenPressed(new ExtendIntake());
     button6.whenPressed(new RetractIntake());

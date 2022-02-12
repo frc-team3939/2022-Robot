@@ -3,11 +3,20 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
+import frc.robot.commands.Turn_to_Angle_Command;
+import frc.robot.commands.Intake.ExtendIntake;
+import frc.robot.commands.Intake.IntakeRunVariableSpeed;
+import frc.robot.commands.Shoot.LoadShooterCommand;
+import frc.robot.commands.Shoot.ShooterSpeedCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -26,6 +35,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intake;
   public static OI m_oi;
   public static ClimberSubsystem climber;
+  public Timer timer;
   // private Ultrasonic sonic = new Ultrasonic(4, 4);
 
   /**
@@ -125,7 +135,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     new Sync_Encoder();
-
+    timer.reset();
+    timer.start();
+    new ExtendIntake();
   }
 
   /**
@@ -134,8 +146,23 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
-  }
+    
+    if (timer.get() < 0.5) {
+      Robot.drive.drive(1, 0, 0, 0.25); //forward 25%
+    } else if (timer.get() < 3) {
+      Robot.drive.drive(1, 0, 0, 0.15); //forward 15% and start intake
+      new IntakeRunVariableSpeed(0.5);
+    } else if (timer.get() < 5) {
+      new ParallelCommandGroup(new IntakeRunVariableSpeed(0), new Turn_to_Angle_Command(180));
+    } else if (timer.get() < 12) {
+      new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125));
+    } else {
+      new ShooterSpeedCommand(0, 0);
+    }
 
+    
+  }
+ 
   @Override
   public void teleopInit() {
     // new HomeCommandGroup().start();

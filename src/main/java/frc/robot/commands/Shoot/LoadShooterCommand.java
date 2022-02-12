@@ -11,19 +11,29 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class LoadShooterCommand extends CommandBase {
-  public LoadShooterCommand() {
+  double s;
+  double d;
+  int i;
+  public LoadShooterCommand(double speed, double delayInSchedulerCycles) {
     addRequirements(Robot.shooter);
+    s = speed;
+    d = delayInSchedulerCycles;
   }
 
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
+    i = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    Robot.shooter.loaderSpin(1);
+    i++;
+    if (i > d) {
+      Robot.shooter.loaderSpin(s);
+    }
+      
   }
 
   // Make this return true when this Command no longer needs to run execute()

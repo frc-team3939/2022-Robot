@@ -15,6 +15,14 @@ public class Turn_to_Angle_Command extends CommandBase {
   /** Creates a new Turn_to_Angle_Command. */
   PID_DrivetrainSubsystem drive;
   double d_angle;
+  boolean a;
+  public Turn_to_Angle_Command(double angle, boolean auto) {
+    drive = Robot.drive;
+    d_angle = angle;
+    addRequirements(drive);
+    a = auto;
+  }
+
   public Turn_to_Angle_Command(double angle) {
     drive = Robot.drive;
     d_angle = angle;
@@ -31,10 +39,12 @@ public class Turn_to_Angle_Command extends CommandBase {
     addRequirements(drive);
   }
 
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drive.angleReset();
+    if (a == false)
+      drive.angleReset(); // THIS MAKES IT SO THAT DURING AUTONOMOUS THE ANGLE WILL NOT RESET WHILE TURNING
     drive.gotoAngle(0, 0, d_angle, 1);
   }
 

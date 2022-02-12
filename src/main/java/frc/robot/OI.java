@@ -11,6 +11,9 @@ import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RetractIntake;
+import frc.robot.commands.climber.ExtendRetractClimber;
+import frc.robot.commands.climber.ReleaseWinch;
+import frc.robot.commands.climber.WinchPull;
 
 import static frc.robot.RobotMap.*;
 
@@ -117,6 +120,11 @@ public class OI {
     button7.whenPressed(new IntakeRunVariableSpeed(1.0)); //FULL SPEED INTAKE
     button8.whenPressed(new IntakeRunVariableSpeed(0)); // STOP INTAKE
     button9.whenPressed(new IntakeRunVariableSpeed(-1.0)); // FULL SPEED INTAKE REVERSE
+    button21.whenPressed(new WinchPull(0.25)); // starting slow for now, 25%
+    button22.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
+    button23.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
+    button24.whenPressed(new ReleaseWinch()); // release winch motor
+    button25.whenPressed(new WinchPull(0.5)); // faster pull speed
 //button1.whenPressed(new MatchLocANDAbsEncoderCommand(Robot.drive));
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());

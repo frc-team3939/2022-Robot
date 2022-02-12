@@ -27,6 +27,7 @@ public class Turn_to_Angle_Command extends CommandBase {
     drive = Robot.drive;
     d_angle = angle;
     addRequirements(drive);
+    a = false;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -37,6 +38,7 @@ public class Turn_to_Angle_Command extends CommandBase {
     else
       d_angle = 0;
     addRequirements(drive);
+    a = false;
   }
 
   

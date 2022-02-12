@@ -32,8 +32,7 @@ public class LoadShooterCommand extends CommandBase {
     i++;
     if (i > d) {
       Robot.shooter.loaderSpin(s);
-    }
-      
+    }  
   }
 
   // Make this return true when this Command no longer needs to run execute()

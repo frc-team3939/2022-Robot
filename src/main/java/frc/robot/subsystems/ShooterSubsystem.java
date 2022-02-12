@@ -55,7 +55,7 @@ public class ShooterSubsystem extends SubsystemBase {
     angleMotor.setInverted(true);
     angleMotor.setNeutralMode(NeutralMode.Brake);
     angleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
-    timingMotor.setNeutralMode(NeutralMode.Brake);
+    timingMotor.setNeutralMode(NeutralMode.Coast);
     timingMotor.setInverted(true);
   }
   

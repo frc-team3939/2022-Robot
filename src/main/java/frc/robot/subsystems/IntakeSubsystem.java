@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
@@ -21,11 +22,15 @@ public class IntakeSubsystem extends SubsystemBase {
   public DoubleSolenoid solenoidLeft;
   public DoubleSolenoid solenoidRight;
   public TalonSRX intakeMotor;
+  public TalonSRX intermediaryMotor;
+  public DigitalInput middleSwitch;
 
   public IntakeSubsystem() {
     solenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
     solenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 4);
     intakeMotor = new TalonSRX(intakemotor);
+    intermediaryMotor = new TalonSRX(intermediarymotor);
+    middleSwitch = new DigitalInput(3);
 
     intakeMotor.setNeutralMode(NeutralMode.Brake);
   }
@@ -57,6 +62,21 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(ControlMode.PercentOutput, speed);
   }
   
+  public void runMiddleMotor(double speed) {
+    intermediaryMotor.set(ControlMode.PercentOutput, speed); //gonna need hte power for this
+  }
+
+  public boolean isMiddleLimitActivated() {
+    return middleSwitch.get();
+  }
+  public void runFullIntake(double speed) {
+    intermediaryMotor.set(ControlMode.PercentOutput, speed); 
+    intakeMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+
+
+
   // TODO add runIntake() and stopIntake() functions when motor controller is apparent
   @Override
   public void periodic() {

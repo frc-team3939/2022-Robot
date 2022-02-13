@@ -155,7 +155,7 @@ public class Robot extends TimedRobot {
     } else if (timer.get() < 5) {
       new ParallelCommandGroup(new IntakeRunVariableSpeed(0), new Turn_to_Angle_Command(180));
     } else if (timer.get() < 12) {
-      new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125));
+      new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125, true));
     } else {
       new ShooterSpeedCommand(0, 0);
     }

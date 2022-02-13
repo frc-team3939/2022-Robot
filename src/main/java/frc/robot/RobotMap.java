@@ -44,6 +44,7 @@ public class RobotMap {
   
   public final static int intakemotor = 99; //CHANGE
   public final static int climbermotor = 99; //CHANGE
+  public final static int intermediarymotor = 99; //CHANGE
   /* ---- Solenoid Channels ---- */
 
   /* ---- Analog Inputs ---- */

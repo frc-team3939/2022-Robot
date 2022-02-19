@@ -4,15 +4,15 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
 
 public class Turn_to_Angle_Command extends CommandBase {
-  /** Creates a new Turn_to_Angle_Command. */
+  /** TurnToAngle - pass on nothing to turn to limelight target, angle in degrees if wanted
+   * @param angle angle at which to turn to
+   */
   PID_DrivetrainSubsystem drive;
   double d_angle;
   boolean a;

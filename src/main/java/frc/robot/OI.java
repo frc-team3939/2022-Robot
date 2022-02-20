@@ -15,12 +15,16 @@ import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RetractIntake;
 import frc.robot.commands.Intake.RunMiddle;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
+import frc.robot.commands.Shoot.ExpungeWrongColorShooter;
 import frc.robot.commands.Shoot.HomeAngleLimitSwitchCommand;
+import frc.robot.commands.Shoot.MoveToAngleCommand;
+import frc.robot.commands.Shoot.ResetAngleCommand;
 import frc.robot.commands.Shoot.ShooterSpeedCommand;
 import frc.robot.commands.Shoot.adjustAngleCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.commands.climber.ReleaseWinch;
 import frc.robot.commands.climber.WinchPull;
+import frc.robot.commands.climber.WinchPullPosition;
 
 import static frc.robot.RobotMap.*;
 
@@ -68,7 +72,6 @@ public class OI {
   Button button38;
   Button button39;
   Button button310;
-  Button button311;
 
   /**
    * Initialize the joystick and it's buttons. After initialization, attach any
@@ -103,6 +106,7 @@ public class OI {
     button28 = new JoystickButton(stick2, 8);
     button29 = new JoystickButton(stick2, 9);
     button210 = new JoystickButton(stick2, 10);
+    
     // Joystick 3 Buttons
     button31 = new JoystickButton(stick3, 1);
     button32 = new JoystickButton(stick3, 2);
@@ -114,7 +118,6 @@ public class OI {
     button38 = new JoystickButton(stick3, 8);
     button39 = new JoystickButton(stick3, 9);
     button310 = new JoystickButton(stick3, 10);
-    button311 = new JoystickButton(stick3, 11);
 
     // Joystick 1 Actions
     button1.whenPressed(new Sync_Encoder()); // sync encoders
@@ -123,22 +126,41 @@ public class OI {
     button4.whenPressed(new AutoShootCommandGroup()); // autoshoot but no shoot values yet
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
-    button7.whenPressed(new IntakeRunVariableSpeed(1.0)); //FULL SPEED INTAKE NO MIDDLE
-    button8.whenPressed(new IntakeRunVariableSpeed(0)); // STOP INTAKE
-    button9.whenPressed(new IntakeRunVariableSpeed(-1.0)); // FULL SPEED INTAKE REVERSE NO MIDDLE
-    button10.whenPressed(new IntakeTwoBallsCommandGroup()); //intakes two balls and stores them
-    button11.whenPressed(new RunMiddleAndIntake(false)); //runs intake AND MIDDLE
-    button12.whenPressed(new RunMiddleAndIntake(true)); //reverses intake AND MIDDLE
+    
 
-    button21.whenPressed(new WinchPull(0.25)); // starting slow for now, 25%
+
+
+    button10.whenPressed(new IntakeTwoBallsCommandGroup()); //intakes two balls and stores them
+    button11.whenPressed(new RunMiddleAndIntake(0.5, false, false, true)); //runs intake AND MIDDLE
+    button12.whenPressed(new RunMiddleAndIntake(0.5, true, false, false)); //reverses intake AND MIDDLE
+
+    button21.whenPressed(new WinchPullPosition(0, true)); // starting slow for now, 25%
     button22.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
     button23.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
     button24.whenPressed(new ReleaseWinch()); // release winch motor
     button25.whenPressed(new WinchPull(0.5)); // faster pull speed
-    button31.whenPressed(new ShooterSpeedCommand(0.2, 1)); //FULL POWER
+    button26.whenPressed(new MoveToAngleCommand(0, true));
+    button27.whenPressed(new ResetAngleCommand());
+    button28.whenPressed(new HomeAngleLimitSwitchCommand());
+    button29.whenPressed(new ShooterSpeedCommand(0.3, 0, true));
+    button210.whenPressed(new ShooterSpeedCommand(0, 0, false));
+    
+    button31.whenPressed(new RunMiddleAndIntake(0, false, true, true));
+    button32.whenPressed(new RunMiddleAndIntake(0, false, true, false));
+    button33.whenPressed(new RunMiddleAndIntake(0, false, false, false)); // stop
+    button34.whenPressed(new RunMiddleAndIntake(0, true, true, false));
+    button35.whenPressed(new RunMiddle(0.5, false, 0, true));
+    button36.whenPressed(new RunMiddle(0, false, 0 , false));
+    button37.whenPressed(new IntakeRunVariableSpeed(0, true));
+    button38.whenPressed(new IntakeRunVariableSpeed(0, false));
+    button39.whenPressed(new IntakeRunVariableSpeed(-0.6, false)); // reverse
+    button310.whenPressed(new IntakeTwoBallsCommandGroup());
+    /*button31.whenPressed(new ShooterSpeedCommand(0.2, 1, false)); //FULL POWER
     button32.whenPressed(new RunMiddle(false, 0)); //runs middle motor
     button33.whenPressed(new FireTwoBalls()); // fires two balls
-    button35.whenPressed(new HomeAngleLimitSwitchCommand());
+    button34.whenPressed(new ExpungeWrongColorShooter());
+    button35.whenPressed(new HomeAngleLimitSwitchCommand());*/
+    
 //button1.whenPressed(new MatchLocANDAbsEncoderCommand(Robot.drive));
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());

@@ -4,8 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
+import com.revrobotics.SparkMaxRelativeEncoder.*;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -24,13 +28,15 @@ public class ClimberSubsystem extends SubsystemBase {
   public DoubleSolenoid rightArm;
   public DigitalInput leftLimitSwitch;
   public DigitalInput rightLimitSwitch;
+  public RelativeEncoder encoder;
   
   public ClimberSubsystem() {
     winch = new CANSparkMax(climbermotor, MotorType.kBrushless);
-    leftArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 5, 6);
-    rightArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 7, 8); //change ids for 1-8
-    leftLimitSwitch = new DigitalInput(2);
-    rightLimitSwitch = new DigitalInput(3);
+    encoder = winch.getEncoder(Type.kHallSensor, 42);
+    leftArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 5, 4);
+    rightArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 6, 7); //change ids for 1-8
+    leftLimitSwitch = new DigitalInput(4);
+    rightLimitSwitch = new DigitalInput(5);
 
     winch.setIdleMode(IdleMode.kBrake);
   }
@@ -49,6 +55,17 @@ public class ClimberSubsystem extends SubsystemBase {
     winch.set(s);
   }
   
+  public void resetEncoder() {
+    encoder.setPosition(0);
+  }
+
+  public double getEncoder() {
+    return encoder.getPosition();
+  }
+
+  public void goToEncoder(double pos) {
+    
+  }
   public boolean checkIfAtLimit() {
     if (leftLimitSwitch.get() == true || rightLimitSwitch.get() == true) {
       return true;

@@ -53,6 +53,13 @@ public class Robot extends TimedRobot {
     climber = new ClimberSubsystem();
     m_oi = new OI();
     CommandScheduler.getInstance().setDefaultCommand(drive, new DriveCommand(drive));
+    SmartDashboard.putNumber("Shooter Speed Testing", 0);
+    SmartDashboard.putNumber("Shooter Angle", 0);
+    SmartDashboard.putBoolean("Shooter Done?", false);
+    SmartDashboard.putNumber("MiddleIntakeSpeed", 0);
+    SmartDashboard.putNumber("MiddleSpeed", 0);
+    SmartDashboard.putNumber("JustIntakeSpeed", 0);
+    SmartDashboard.putNumber("Climber Goto", 0);
     //SmartDashboard.putNumber("Camera", 1);
   }
 
@@ -93,6 +100,9 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("AHS Angle", drive.getAngle());
 
+    SmartDashboard.putNumber("Current Shooter Angle", shooter.shooterencoder());
+    SmartDashboard.putNumber("Climb Encoder Value", climber.getEncoder());
+    
 
 
     // SmartDashboard.putNumber("Left Leg Encoder", legs.getLeftLeg());
@@ -151,13 +161,13 @@ public class Robot extends TimedRobot {
       Robot.drive.drive(1, 0, 0, 0.25); //forward 25%
     } else if (timer.get() < 3) {
       Robot.drive.drive(1, 0, 0, 0.15); //forward 15% and start intake
-      new IntakeRunVariableSpeed(0.5);
+      new IntakeRunVariableSpeed(0.5, false);
     } else if (timer.get() < 5) {
-      new ParallelCommandGroup(new IntakeRunVariableSpeed(0), new Turn_to_Angle_Command(180));
+      new ParallelCommandGroup(new IntakeRunVariableSpeed(0, false), new Turn_to_Angle_Command(180));
     } else if (timer.get() < 12) {
       new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125, true));
     } else {
-      new ShooterSpeedCommand(0, 0);
+      new ShooterSpeedCommand(0, 0, false);
     }
 
     

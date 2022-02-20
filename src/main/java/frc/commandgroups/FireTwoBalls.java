@@ -18,6 +18,6 @@ public class FireTwoBalls extends ParallelCommandGroup {
   public FireTwoBalls() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShooterSpeedCommand(0.3, 0.7), new RunMiddle(false, 75));
+    addCommands(new ShooterSpeedCommand(0.3, 0.7, false), new RunMiddle(1, false, 75, false));
   }
 }

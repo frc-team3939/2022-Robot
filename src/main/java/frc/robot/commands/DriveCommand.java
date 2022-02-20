@@ -29,7 +29,7 @@ public class DriveCommand extends CommandBase {
    */
   @Override
   public void initialize() {
-    drive.frontRight.setAngle(1);
+    /*drive.frontRight.setAngle(1);
     drive.frontLeft.setAngle(1);
     drive.backLeft.setAngle(1);
     drive.backRight.setAngle(1);
@@ -38,6 +38,7 @@ public class DriveCommand extends CommandBase {
     drive.frontLeft.setSpeed(0);
     drive.backLeft.setSpeed(0);
     drive.backRight.setSpeed(0);
+    */
   }
 
   /**

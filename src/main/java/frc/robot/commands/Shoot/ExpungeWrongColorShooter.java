@@ -15,7 +15,10 @@ public class ExpungeWrongColorShooter extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    Robot.shooter.setshooterSpeed(0.2);
+    Robot.shooter.loaderSpin(0.8);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -23,7 +26,10 @@ public class ExpungeWrongColorShooter extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    Robot.shooter.shooterStop();
+    Robot.shooter.loaderSpin(0);
+  }
 
   // Returns true when the command should end.
   @Override

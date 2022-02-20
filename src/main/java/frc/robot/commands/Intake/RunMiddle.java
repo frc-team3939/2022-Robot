@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Intake;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
@@ -12,15 +13,19 @@ public class RunMiddle extends CommandBase {
   boolean r;
   int d;
   int i;
+  boolean dash;
+  double s;
   /**
    * 
    * @param reverse reverse the middle motor if true
    * @param delayInSchedulerCycles delay middle motor running, 50 per second
    */
-  public RunMiddle(boolean reverse, int delayInSchedulerCycles) {
+  public RunMiddle(double speed, boolean reverse, int delayInSchedulerCycles, boolean fromDashboard) {
     addRequirements(Robot.intake);
     r = reverse;
     d = delayInSchedulerCycles;
+    dash = fromDashboard;
+    s = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -33,11 +38,16 @@ public class RunMiddle extends CommandBase {
   @Override
   public void execute() {
     i++;
-    if (i > d) {
-      Robot.intake.runMiddleMotor(1);
+    if (dash == false) {
+      if (i > d) {
+        Robot.intake.runMiddleMotor(s);
+      } else {
+        Robot.intake.runMiddleMotor(0);
+      }
     } else {
-      Robot.intake.runMiddleMotor(0);
+      Robot.intake.runMiddleMotor(-SmartDashboard.getNumber("MiddleSpeed", 0));
     }
+    
   }
 
   // Called once the command ends or is interrupted.

@@ -18,6 +18,6 @@ public class IntakeTwoBallsCommandGroup extends SequentialCommandGroup {
   public IntakeTwoBallsCommandGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ParallelRaceGroup(new LoadShooterCommand(0.2, 0, false), new RunMiddleAndIntake()), new RunMiddleAndIntake(false));
+    addCommands(new ParallelRaceGroup(new LoadShooterCommand(0.2, 0, false), new RunMiddleAndIntake(0.8, false, false, false)), new RunMiddleAndIntake(0.8, false, false, true));
   }
 }

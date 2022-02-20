@@ -26,7 +26,7 @@ public class HomeAngleLimitSwitchCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    Robot.shooter.moveAngle(-0.1);
+    Robot.shooter.moveAngle(0.1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,6 +46,7 @@ public class HomeAngleLimitSwitchCommand extends CommandBase {
   // subsystems is scheduled to run
   
   protected void interrupted() {
+    Robot.shooter.resetLimit();
     Robot.shooter.moveAngle(0);
   }
 }

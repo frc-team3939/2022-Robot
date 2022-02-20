@@ -16,6 +16,7 @@ public class ExtendRetractClimber extends CommandBase {
   boolean o;
   public ExtendRetractClimber(boolean onoff) {
     addRequirements(Robot.climber);  
+    o = onoff;
   }
 
   // Called when the command is initially scheduled.

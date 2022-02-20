@@ -15,10 +15,12 @@ public class ShooterSpeedCommand extends CommandBase {
   boolean done;
   double i, fs;
   double ss;
-  public ShooterSpeedCommand(double feederspeed, double shooterspeed) {
+  boolean d;
+  public ShooterSpeedCommand(double feederspeed, double shooterspeed, boolean isPullingDashboard) {
     addRequirements(Robot.shooter);
     fs = feederspeed;
     ss = shooterspeed;
+    d = isPullingDashboard;
   }
 
   // Called just before this Command runs the first time
@@ -32,7 +34,12 @@ public class ShooterSpeedCommand extends CommandBase {
   public void execute() {
     i= i + 1;
     //ss = 70;//(SmartDashboard.getNumber("Speed", 0)); //Delete when speed is decided on
-    Robot.shooter.setshooterSpeed(ss); 
+    
+    if (d == true) {
+      Robot.shooter.setshooterSpeed(SmartDashboard.getNumber("Shooter Speed Testing", 0));
+    } else {
+      Robot.shooter.setshooterSpeed(ss);
+    }
     done = SmartDashboard.getBoolean("Shooter Done?", false);
 
     if( i > 100){

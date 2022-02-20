@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  // TODO Verify real pnumeatic hub IDs when completed
   public DoubleSolenoid solenoidLeft;
   public DoubleSolenoid solenoidRight;
   public TalonSRX intakeMotor;
@@ -26,11 +25,11 @@ public class IntakeSubsystem extends SubsystemBase {
   public DigitalInput middleSwitch;
 
   public IntakeSubsystem() {
-    solenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
-    solenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 4);
+    solenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 2);
+    solenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 0);
     intakeMotor = new TalonSRX(intakemotor);
     intermediaryMotor = new TalonSRX(intermediarymotor);
-    middleSwitch = new DigitalInput(3);
+    middleSwitch = new DigitalInput(0);
 
     intakeMotor.setNeutralMode(NeutralMode.Brake);
   }
@@ -70,16 +69,7 @@ public class IntakeSubsystem extends SubsystemBase {
     return middleSwitch.get();
   }
   public void runFullIntake(double speed) {
-    intermediaryMotor.set(ControlMode.PercentOutput, speed); 
+    intermediaryMotor.set(ControlMode.PercentOutput, -1); 
     intakeMotor.set(ControlMode.PercentOutput, speed);
-  }
-
-
-
-
-  // TODO add runIntake() and stopIntake() functions when motor controller is apparent
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

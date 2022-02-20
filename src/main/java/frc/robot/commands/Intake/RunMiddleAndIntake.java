@@ -5,34 +5,54 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class RunMiddleAndIntake extends CommandBase {
-  /** Input true to reverse the intake, false if not. */
+  
   boolean r;
   boolean stopOnLimit;
-  public RunMiddleAndIntake(boolean reverse) {
+  boolean d;
+  double s;
+
+  /**
+   * 
+   * @param speed speed if not pulling from dash, -1 to 1
+   * @param reverse if reversing intake
+   * @param fromDashboard true if you are pulling from smartdash
+   * @param stopOnLimits whether to stop on the intake limitswitch
+   */
+  public RunMiddleAndIntake(double speed, boolean reverse, boolean fromDashboard, boolean stopOnLimits) {
     addRequirements(Robot.intake);
     r = reverse;
-    stopOnLimit = true;
+    stopOnLimit = stopOnLimits;
+    d = fromDashboard;
+    s = speed;
   }
 
-  public RunMiddleAndIntake() {
-    addRequirements(Robot.intake);
-    stopOnLimit = false;
-  }
-
+  /*
+   * public RunMiddleAndIntake(double speed) {
+   * addRequirements(Robot.intake);
+   * stopOnLimit = false;
+   * s = speed;
+   * }
+   */
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    if (d == false) {
+      Robot.intake.runFullIntake(s);
+    } else {
+      Robot.intake.runFullIntake(SmartDashboard.getNumber("MiddleIntakeSpeed", 0));
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.intake.runFullIntake(1);
+    
+
   }
 
   // Called once the command ends or is interrupted.
@@ -44,10 +64,10 @@ public class RunMiddleAndIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (stopOnLimit == false){
+    if (stopOnLimit == false) {
       return false;
     } else {
       return Robot.intake.isMiddleLimitActivated();
-    }   
+    }
   }
 }

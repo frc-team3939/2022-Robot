@@ -2,28 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class IntakeRunVariableSpeed extends CommandBase {
-  double speed;
+public class WinchPullPosition extends CommandBase {
+  /** Creates a new WinchPullPosition. */
+  double p;
   boolean d;
-  public IntakeRunVariableSpeed(double intakeSpeed, boolean fromDash) {
-    addRequirements(Robot.intake);
-    speed = intakeSpeed;
+  
+  public WinchPullPosition(double position, boolean fromDash) {
+    addRequirements(Robot.climber);
+    p = position;
     d = fromDash;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (d == false){
-      Robot.intake.intakeRunSetSpeed(speed);
+    if (d == false) {
+      Robot.climber.goToEncoder(p);
     } else {
-      Robot.intake.intakeRunSetSpeed(SmartDashboard.getNumber("JustIntakeSpeed", 0));
+      Robot.climber.goToEncoder(SmartDashboard.getNumber("Climber Goto", 0));
     }
   }
 
@@ -33,9 +35,7 @@ public class IntakeRunVariableSpeed extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    Robot.intake.intakeStop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

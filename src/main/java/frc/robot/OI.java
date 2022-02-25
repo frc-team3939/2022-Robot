@@ -5,9 +5,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.commandgroups.FireTwoBalls;
 import frc.commandgroups.IntakeTwoBallsCommandGroup;
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Intake.ExtendIntake;
@@ -72,7 +75,10 @@ public class OI {
   Button button38;
   Button button39;
   Button button310;
-
+  POVButton up;
+  POVButton right;
+  POVButton down;
+  POVButton left;
   /**
    * Initialize the joystick and it's buttons. After initialization, attach any
    * commands to there buttons.
@@ -83,6 +89,10 @@ public class OI {
     stick3 = new Joystick(joystick3Id);
 
     // Joystick 1 Buttons
+    up = new POVButton(stick, 0);
+    right = new POVButton(stick, 90);
+    down = new POVButton(stick, 180);
+    left = new POVButton(stick, 270);
     button1 = new JoystickButton(stick, 1);
     button2 = new JoystickButton(stick, 2);
     button3 = new JoystickButton(stick, 3);
@@ -120,6 +130,10 @@ public class OI {
     button310 = new JoystickButton(stick3, 10);
 
     // Joystick 1 Actions
+    up.whenHeld(new DriveCommandSetValue(0.3, 0, 0, 0.5));
+    right.whenHeld(new DriveCommandSetValue(0, 0.3, 0, 0.5));
+    down.whenHeld(new DriveCommandSetValue(-0.3, 0, 0, 0.5));
+    left.whenHeld(new DriveCommandSetValue(0, -0.3, 0, 0.5));
     button1.whenPressed(new Sync_Encoder()); // sync encoders
 
     button3.whenPressed(new Turn_to_Angle_Command(90)); // UNTESTED turn robot to specified angle (degrees)

@@ -23,12 +23,9 @@ public class RunMiddleAndIntake extends CommandBase {
    * @param fromDashboard true if you are pulling from smartdash
    * @param stopOnLimits whether to stop on the intake limitswitch
    */
-  public RunMiddleAndIntake(double speed, boolean reverse, boolean fromDashboard, boolean stopOnLimits) {
+  public RunMiddleAndIntake() {
     addRequirements(Robot.intake);
-    r = reverse;
-    stopOnLimit = stopOnLimits;
-    d = fromDashboard;
-    s = speed;
+    addRequirements(Robot.shooter);
   }
 
   /*
@@ -41,33 +38,34 @@ public class RunMiddleAndIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (d == false) {
-      Robot.intake.runFullIntake(s);
-    } else {
-      Robot.intake.runFullIntake(SmartDashboard.getNumber("MiddleIntakeSpeed", 0));
-    }
+    Robot.shooter.feederSpeed(0.5);
+    Robot.intake.intakeSpeed(.75);
+    Robot.intake.runMiddleMotor(-1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-
+    if (Robot.shooter.feederLimitCheck() == true) {
+      Robot.shooter.feederSpeed(0);
+      if (Robot.intake.isMiddleLimitActivated() == false) {
+        Robot.intake.runMiddleMotor(0);
+        Robot.intake.intakeSpeed(0);
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.intake.runFullIntake(0);
+    Robot.intake.intakeStop();
+    Robot.intake.runMiddleMotor(0);
+    Robot.shooter.feederSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (stopOnLimit == false) {
-      return false;
-    } else {
-      return Robot.intake.isMiddleLimitActivated();
-    }
+    return (!Robot.intake.isMiddleLimitActivated() && Robot.shooter.feederLimitCheck());
   }
 }

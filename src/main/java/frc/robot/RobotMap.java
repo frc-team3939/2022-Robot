@@ -54,10 +54,10 @@ public class RobotMap {
   public final static int RightFrontEncoderId = 2;
   public final static int RightBackEncoderId = 3;
 
-  public final static double RightFrontEncoderOffset = -.261; // original -.261
-  public final static double LeftFrontEncoderOffset = -2.247; //original -2.247
-  public final static double RightBackEncoderOffset = 2.427; // original 2.427
-  public final static double LeftBackEncoderOffset = -.687; //original -.687
+  public final static double RightFrontEncoderOffset = -.208; // original -.261
+  public final static double LeftFrontEncoderOffset = -2.2033; //original -2.247
+  public final static double RightBackEncoderOffset = 2.501; // original 2.427
+  public final static double LeftBackEncoderOffset = -.621; //original -.687
 
   /* ---- Size Constants ---- */
   public static final int kSlotIdx = 0;
@@ -67,8 +67,9 @@ public class RobotMap {
   /* ---- PWM ---- */
 
   // Units don't matter as long as they are the same
-  public final static double FrameWidth =  24;
-  public final static double FrameLength = 20.375;
+  public final static double FrameWidth =  21;
+  public final static double FrameLength = 24
+  ;
   public final static double FrameDiagonal = Math.sqrt(FrameWidth * FrameWidth + FrameLength * FrameLength);
 
   /* ---- PID Tuning for Drivetrain ---- */
@@ -111,14 +112,15 @@ public class RobotMap {
   /* ---- Max and Mins ---- */
 
   /* ---- Turn Controller PID Tuning ---- */
-  public static final double turnkP = 3.50;
-  public static final double turnkI = 0.0001;
-  public static final double turnkD = 0.00;
+  public static final double turnkP = 0.01;
+  public static final double turnkI = 0.0015;
+  public static final double turnkD = 0.001;
   public static final double turnkF = 0.00;
-  public static final double turnToleracne = 2.0f;
+  public static final double turnToleracne = 1.0f;
 
-  /* ---- Analog Inputs ---- */
-
-  /* ---- Climb Pnumatics ---- */
+  /*--- Vision Constants ---*/
+  public static final double goalHeightInches = 104.0;
+  public static final double limelightLensHeightInches = 23.0;
+  public static final double limelightMountAngleDegrees = 19.0;
 
 }

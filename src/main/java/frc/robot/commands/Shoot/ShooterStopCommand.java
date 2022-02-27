@@ -4,20 +4,22 @@
 
 package frc.robot.commands.Shoot;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ExpungeWrongColorShooter extends CommandBase {
-  /** Creates a new ExpungeWrongColorShooter. */
-  public ExpungeWrongColorShooter() {
+public class ShooterStopCommand extends CommandBase {
+  /** Creates a new ShooterStopCommand. */
+  public ShooterStopCommand() {
     addRequirements(Robot.shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.shooter.setshooterSpeed(0.2);
-    Robot.shooter.feederSpeed(0.8);
+    Robot.shooter.setshooterSpeed(0);
+    Robot.shooter.feederSpeed(0);
+    Robot.intake.runMiddleMotor(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -26,14 +28,11 @@ public class ExpungeWrongColorShooter extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    Robot.shooter.shooterStop();
-    Robot.shooter.feederSpeed(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

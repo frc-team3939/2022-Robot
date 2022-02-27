@@ -17,18 +17,18 @@ public class AutoShootCommand extends CommandBase {
   double p, x;
 
   public AutoShootCommand() {
-    addRequirements(Robot.shooter, Robot.drive);
+    //addRequirements(Robot.shooter, Robot.drive);
   }
 
   // Called just before this Command runs the first time
   @Override
   public void initialize() {
-    double[] camtran = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camtran").getDoubleArray(new double[]{});
-    double z = -camtran[2];
-    double camerax = 960;
-    double cameray = 720;
-    double camerafovx = 54;
-    double camerafovy = 41;
+    //double[] camtran = NetworkTableInstance.getDefault().getTable("limelight").getEntry("camtran").getDoubleArray(new double[]{});
+    //double z = -camtran[2];
+    //double camerax = 960;
+    //double cameray = 720;
+    //double camerafovx = 54;
+    //double camerafovy = 41;
     double degperpixelx = 0.05625;//camerafovx/camerax;
     double degperpixely = 0.05694;//camerafovy/cameray;
     double targetx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("thor").getDouble(0);
@@ -39,15 +39,15 @@ public class AutoShootCommand extends CommandBase {
     double radiansy = Math.toRadians(targetdegy);
     double distancefromx = ((39.25)/Math.tan(radiansx));
     double distancefromy = ((17)/Math.tan(radiansy));
-    double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    //double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    //double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     SmartDashboard.putNumber("Degrees Per Pixel X", degperpixelx);
     SmartDashboard.putNumber("Degrees Per Pixel Y", degperpixely);
     SmartDashboard.putNumber("Target X Pixels", targetx);
     SmartDashboard.putNumber("Target Y Pixels", targety);
     SmartDashboard.putNumber("Distance Calculated from X", distancefromx);
     SmartDashboard.putNumber("Distance Calculated from Y", distancefromy);
-    SmartDashboard.putNumber("z", z);
+    //SmartDashboard.putNumber("z", z);
 
     
 
@@ -70,7 +70,7 @@ public class AutoShootCommand extends CommandBase {
 
   // Make this return true when this Command no longer needs to run execute()
   public boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
@@ -80,7 +80,7 @@ public class AutoShootCommand extends CommandBase {
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   protected void interrupted() {
-    Robot.shooter.setshooterSpeed(0);
-    Robot.shooter.loaderSpin(0);
+    //Robot.shooter.setshooterSpeed(0);
+    //Robot.shooter.loaderSpin(0);
   }
 }

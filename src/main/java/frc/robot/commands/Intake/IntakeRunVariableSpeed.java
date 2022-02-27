@@ -21,9 +21,9 @@ public class IntakeRunVariableSpeed extends CommandBase {
   @Override
   public void initialize() {
     if (d == false){
-      Robot.intake.intakeRunSetSpeed(speed);
+      Robot.intake.intakeSpeed(speed);
     } else {
-      Robot.intake.intakeRunSetSpeed(SmartDashboard.getNumber("JustIntakeSpeed", 0));
+      Robot.intake.intakeSpeed(SmartDashboard.getNumber("JustIntakeSpeed", 0));
     }
   }
 

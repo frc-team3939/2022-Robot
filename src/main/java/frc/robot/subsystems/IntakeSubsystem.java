@@ -45,10 +45,6 @@ public class IntakeSubsystem extends SubsystemBase {
     solenoidRight.set(kReverse);
   }
 
-  public void intakeRunFullSpeed() {
-    intakeMotor.set(ControlMode.PercentOutput, 1.0);
-  }
-
   public void intakeReverse() {
     intakeMotor.set(ControlMode.PercentOutput, -1.0);
   }
@@ -57,7 +53,11 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void intakeRunSetSpeed(double speed) {
+  /**
+   * Runs the intake at the passed in speed
+   * @param speed -1 to 1 percent value
+   */
+  public void intakeSpeed(double speed) {
     intakeMotor.set(ControlMode.PercentOutput, speed);
   }
   
@@ -67,9 +67,5 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public boolean isMiddleLimitActivated() {
     return middleSwitch.get();
-  }
-  public void runFullIntake(double speed) {
-    intermediaryMotor.set(ControlMode.PercentOutput, -1); 
-    intakeMotor.set(ControlMode.PercentOutput, speed);
   }
 }

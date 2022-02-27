@@ -6,7 +6,6 @@ package frc.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Intake.RunMiddle;
-import frc.robot.commands.Shoot.ShooterSpeedCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,6 +17,6 @@ public class FireTwoBalls extends ParallelCommandGroup {
   public FireTwoBalls() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShooterSpeedCommand(0.3, 0.7, false), new RunMiddle(1, false, 75, false));
+   /// addCommands(new ShooterSpeedCommand(0.3, 0.7, false), new RunMiddle(1, false, 75, false));
   }
 }

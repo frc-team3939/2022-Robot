@@ -39,7 +39,7 @@ public class LoadShooterCommand extends CommandBase {
   public void execute() {
     i++;
     if (i > d) {
-      Robot.shooter.loaderSpin(s);
+      Robot.shooter.feederSpeed(s);
     }
   
   }
@@ -57,7 +57,7 @@ public class LoadShooterCommand extends CommandBase {
   // Called once after isFinished returns true
   
   protected void end() {
-    Robot.shooter.loaderSpin(0);
+    Robot.shooter.feederSpeed(0);
   }
 
   // Called when another command which requires one or more of the same

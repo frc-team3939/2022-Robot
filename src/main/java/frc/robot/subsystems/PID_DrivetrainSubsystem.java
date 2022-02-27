@@ -10,10 +10,12 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.RobotMap;
 import frc.robot.util.DriveModule;
 import static frc.robot.RobotMap.*;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 
@@ -126,6 +128,14 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return ahrs.getAngle();
   }
 
+  public double gettx() {
+    return -NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+  }
+  
+  public double getDistance() {
+    return SmartDashboard.getNumber("Target Distance", 0);
+  }
+  
   public void invertDirection(){
     if(inverse == true) {
       inverse = false;

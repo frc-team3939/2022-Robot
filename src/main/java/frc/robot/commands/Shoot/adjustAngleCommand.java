@@ -15,8 +15,8 @@ public class adjustAngleCommand extends CommandBase {
   /**
    * This command changes the angle of the shooter hood
    */
-  int a;
-  public adjustAngleCommand(int angle) {
+  double a;
+  public adjustAngleCommand(double angle) {
     addRequirements(Robot.shooter);
     a = angle;
   }
@@ -29,7 +29,6 @@ public class adjustAngleCommand extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    a = (int) SmartDashboard.getNumber("Shooter Angle", 0); //Change when angle decided upon
     Robot.shooter.angleAdjust(a); 
   }
 

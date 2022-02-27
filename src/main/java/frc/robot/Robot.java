@@ -1,10 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Sync_Encoder;
@@ -12,7 +14,7 @@ import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Shoot.LoadShooterCommand;
-import frc.robot.commands.Shoot.ShooterSpeedCommand;
+import frc.robot.commands.Shoot.ShootCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
@@ -60,6 +62,13 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("MiddleSpeed", 0);
     SmartDashboard.putNumber("JustIntakeSpeed", 0);
     SmartDashboard.putNumber("Climber Goto", 0);
+    SmartDashboard.putNumber("turnkP", 0);
+    SmartDashboard.putNumber("turnkI", 0);
+    SmartDashboard.putNumber("turnkD", 0);
+    
+    //SmartDashboard.putNumber("Distance From Goal to Limelight", distanceFromLimelightToGoalInches);
+    SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
+    SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     //SmartDashboard.putNumber("Camera", 1);
   }
 
@@ -102,9 +111,28 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Current Shooter Angle", shooter.shooterencoder());
     SmartDashboard.putNumber("Climb Encoder Value", climber.getEncoder());
-    
+    SmartDashboard.putBoolean("Is Limit Switch Pressed?", climber.checkIfAtLimit());
+    SmartDashboard.putBoolean("feeder Limit", shooter.feederLimitCheck());
+    SmartDashboard.putBoolean("front limit", intake.isMiddleLimitActivated());
+
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+
+    NetworkTableEntry ty = table.getEntry("ty");
+    double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+
+    // distance from the target to the floor
+    double angleToGoalDegrees = RobotMap.limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+    double distanceFromLimelightToGoalInches = (RobotMap.goalHeightInches - RobotMap.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
 
 
+    SmartDashboard.putNumber("Target Distance", distanceFromLimelightToGoalInches);
+    SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
+    SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     // SmartDashboard.putNumber("Left Leg Encoder", legs.getLeftLeg());
     // SmartDashboard.putNumber("Right Leg Encoder", legs.getRightLeg());
 
@@ -167,7 +195,7 @@ public class Robot extends TimedRobot {
     } else if (timer.get() < 12) {
       new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125, true));
     } else {
-      new ShooterSpeedCommand(0, 0, false);
+      new ShootCommand(0);
     }
 
     

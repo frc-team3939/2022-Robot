@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import static frc.robot.RobotMap.*;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.Robot;
 //import frc.robot.RobotMap;
@@ -85,7 +86,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setshooterSpeed(double shooterSpeed) {
     shooterMotor.set(ControlMode.PercentOutput, shooterSpeed);
   }
-  public void loaderSpin(double timerspeed) {
+  public void feederSpeed(double timerspeed) {
     timingMotor.set(ControlMode.PercentOutput, timerspeed);
   }
   public void resetLimit(){
@@ -94,6 +95,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double shooterencoder(){
     return -angleMotor.getSelectedSensorPosition();
   }
+
   public void setEncoderPosition(int position){
     angleMotor.setSelectedSensorPosition(0);
   }

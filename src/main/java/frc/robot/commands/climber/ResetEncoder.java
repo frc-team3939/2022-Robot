@@ -2,22 +2,22 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shoot;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ExpungeWrongColorShooter extends CommandBase {
-  /** Creates a new ExpungeWrongColorShooter. */
-  public ExpungeWrongColorShooter() {
-    addRequirements(Robot.shooter);
+public class ResetEncoder extends CommandBase {
+  /** Creates a new ResetEncoder. */
+  public ResetEncoder() {
+    addRequirements(Robot.climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.shooter.setshooterSpeed(0.2);
-    Robot.shooter.feederSpeed(0.8);
+    Robot.climber.resetEncoder();
+    Robot.climber.stopWinch();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -26,14 +26,11 @@ public class ExpungeWrongColorShooter extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    Robot.shooter.shooterStop();
-    Robot.shooter.feederSpeed(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

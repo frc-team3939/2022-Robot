@@ -7,26 +7,42 @@ package frc.robot.commands.Shoot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ExpungeWrongColorShooter extends CommandBase {
-  /** Creates a new ExpungeWrongColorShooter. */
-  public ExpungeWrongColorShooter() {
+public class ShootCommand extends CommandBase {
+  /** Creates a new Shoot. */
+  double ss;
+  int i;
+  public ShootCommand(double shooterspeed) {
     addRequirements(Robot.shooter);
+    addRequirements(Robot.intake);
+    ss = shooterspeed;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.shooter.setshooterSpeed(0.2);
-    Robot.shooter.feederSpeed(0.8);
+    i = 0;
+    Robot.shooter.setshooterSpeed(ss);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    i= i + 1;
+    //ss = 70;//(SmartDashboard.getNumber("Speed", 0)); //Delete when speed is decided on
+    Robot.shooter.setshooterSpeed(ss);
+    if(i > 75){
+      Robot.shooter.feederSpeed(0.5);
+      Robot.intake.runMiddleMotor(-1);
+    } else if (i > 250) {
+      Robot.intake.runMiddleMotor(0);
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Robot.intake.runMiddleMotor(0);
     Robot.shooter.shooterStop();
     Robot.shooter.feederSpeed(0);
   }

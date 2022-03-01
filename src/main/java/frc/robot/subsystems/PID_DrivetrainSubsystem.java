@@ -192,6 +192,7 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
 
   public void angleReset(){
     ahrs.reset();
+    ahrs.resetDisplacement();
   }
 
   public boolean atAngle(){

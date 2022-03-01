@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Shoot;
 
+import java.util.concurrent.atomic.AtomicMarkableReference;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,8 +19,13 @@ import frc.robot.commands.TurnToVision;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoShootGroup extends SequentialCommandGroup {
   /** Creates a new AutoShootGroup. */
-  double a;
-  public AutoShootGroup(double angle) {
+  double d, angle, speed;
+  /**
+   * Pass in the distnace from the target
+   * @param distance value in inches
+   */
+  public AutoShootGroup(double distance) {
+    d = distance;
     // Add your commands in the addCommands() call, e.g.
     /*double distance = SmartDashboard.getNumber("Target Distance", 100);
     NetworkTableEntry ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty");
@@ -32,6 +39,13 @@ public class AutoShootGroup extends SequentialCommandGroup {
     //calculate distance
     double distanceFromLimelightToGoalInches = (RobotMap.goalHeightInches - RobotMap.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
     */
-    addCommands(new TurnToVision(Robot.drive), new adjustAngleCommand(((4.9779 * a) + 144.57))  , new ShootCommand(.000805*SmartDashboard.getNumber("Target Distance", 0) + .50058));
+    angle = (4.9779 * distance) + 144.57;
+    speed = (.000805*distance) + .50058;
+
+    SmartDashboard.putNumber("Auto Recieved Distance", d);
+    SmartDashboard.putNumber("Auto Hood Angle", angle);
+    SmartDashboard.putNumber("Auto Shooter Speed", speed);
+
+    addCommands(new TurnToVision(Robot.drive), new adjustAngleCommand(angle) , new ShootCommand(speed));
   }
 }

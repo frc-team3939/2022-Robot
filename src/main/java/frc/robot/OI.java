@@ -11,6 +11,7 @@ import frc.commandgroups.AutoShootCommandGroup;
 import frc.commandgroups.FireTwoBalls;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
+import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.TurnToVision;
 import frc.robot.commands.Turn_to_Angle_Command;
@@ -145,7 +146,7 @@ public class OI {
     button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
-    button7.whenPressed(new ResetAngleCommand());
+    button7.whenPressed(new Reset_Gyro_Command());
     button9.whenPressed(new HomeClimber());
     button10.whenPressed(new SequentialCommandGroup(new adjustAngleCommand(400), new ShootCommand(0.55))); // next to target
     //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));

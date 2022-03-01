@@ -65,8 +65,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("turnkP", 0);
     SmartDashboard.putNumber("turnkI", 0);
     SmartDashboard.putNumber("turnkD", 0);
-    SmartDashboard.putNumber("Gyro Displacement X", drive.getXDisplacement());
-    SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
     
     //SmartDashboard.putNumber("Distance From Goal to Limelight", distanceFromLimelightToGoalInches);
     SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
@@ -116,6 +114,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Is Limit Switch Pressed?", climber.checkIfAtLimit());
     SmartDashboard.putBoolean("feeder Limit", shooter.feederLimitCheck());
     SmartDashboard.putBoolean("front limit", intake.isMiddleLimitActivated());
+
+    SmartDashboard.putNumber("Gyro Displacement X", drive.getXDisplacement());
+    SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 

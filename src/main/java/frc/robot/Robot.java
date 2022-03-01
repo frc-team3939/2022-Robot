@@ -117,6 +117,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Gyro Displacement X", drive.getXDisplacement());
     SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
+    SmartDashboard.putNumber("Gyro Dispalcement Z", drive.getZDisplacement());
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 

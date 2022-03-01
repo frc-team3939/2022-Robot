@@ -22,6 +22,7 @@ public class Auto_ShootSpeed_Command extends CommandBase {
   public void initialize() {
     i = 0;
     Robot.shooter.setshooterSpeed((.000805*SmartDashboard.getNumber("Target Distance", 0)) + .50058);
+    SmartDashboard.putNumber("Auto Shooter Speed", (.000805*SmartDashboard.getNumber("Target Distance", 0)) + .50058);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

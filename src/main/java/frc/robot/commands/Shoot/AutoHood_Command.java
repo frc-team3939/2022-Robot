@@ -17,8 +17,8 @@ public class AutoHood_Command extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.shooter.angleAdjust((4.9779 * SmartDashboard.getNumber("Target Distance", 0)) + 144.57);
-    SmartDashboard.putNumber("Auto Shooter Speed", (4.9779 * SmartDashboard.getNumber("Target Distance", 0)) + 144.57); 
+    Robot.shooter.angleAdjust(-((4.9779 * SmartDashboard.getNumber("Target Distance", 0)) + 144.57));
+    SmartDashboard.putNumber("Auto Shooter Speed", -((4.9779 * SmartDashboard.getNumber("Target Distance", 0)) + 144.57)); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.

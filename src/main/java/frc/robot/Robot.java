@@ -121,6 +121,7 @@ public class Robot extends TimedRobot {
 
     NetworkTableEntry ty = table.getEntry("ty");
     double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+    SmartDashboard.putNumber("ty", NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0));
 
     // distance from the target to the floor
     double angleToGoalDegrees = RobotMap.limelightMountAngleDegrees + targetOffsetAngle_Vertical;
@@ -173,8 +174,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     new Sync_Encoder();
-    timer.reset();
+    /**timer.reset();
     timer.start();
+    */
     new ExtendIntake();
   }
 
@@ -185,7 +187,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
     
-    if (timer.get() < 0.5) {
+    /**if (timer.get() < 0.5) {
       Robot.drive.drive(1, 0, 0, 0.25); //forward 25%
     } else if (timer.get() < 3) {
       Robot.drive.drive(1, 0, 0, 0.15); //forward 15% and start intake
@@ -197,7 +199,7 @@ public class Robot extends TimedRobot {
     } else {
       new ShootCommand(0);
     }
-
+    */
     
   }
  

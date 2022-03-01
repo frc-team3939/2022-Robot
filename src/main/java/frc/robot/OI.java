@@ -3,6 +3,7 @@ package frc.robot;
 import java.lang.Math;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -26,6 +27,7 @@ import frc.robot.commands.Shoot.HomeAngleLimitSwitchCommand;
 import frc.robot.commands.Shoot.MoveToAngleCommand;
 import frc.robot.commands.Shoot.ResetAngleCommand;
 import frc.robot.commands.Shoot.ShootCommand;
+import frc.robot.commands.Shoot.adjustAngleCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.commands.climber.HomeClimber;
 import frc.robot.commands.climber.ResetEncoder;
@@ -144,7 +146,9 @@ public class OI {
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
     button9.whenPressed(new HomeClimber());
-    button11.whileHeld(new AutoShootGroup());
+    button10.whenPressed(new SequentialCommandGroup(new adjustAngleCommand(400), new ShootCommand(0.55))); // next to target
+    //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
+    button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
     button12.whenPressed(new Sync_Encoder());
 
 

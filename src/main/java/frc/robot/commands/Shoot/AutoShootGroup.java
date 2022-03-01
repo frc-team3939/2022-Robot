@@ -17,11 +17,13 @@ import frc.robot.commands.TurnToVision;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoShootGroup extends SequentialCommandGroup {
   /** Creates a new AutoShootGroup. */
-  public AutoShootGroup() {
+  double a;
+  public AutoShootGroup(double angle) {
     // Add your commands in the addCommands() call, e.g.
-    double distance = SmartDashboard.getNumber("Target Distance", 100);
+    /*double distance = SmartDashboard.getNumber("Target Distance", 100);
     NetworkTableEntry ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty");
     double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+    SmartDashboard.putNumber("tyinstant", targetOffsetAngle_Vertical);
 
     // distance from the target to the floor
     double angleToGoalDegrees = RobotMap.limelightMountAngleDegrees + targetOffsetAngle_Vertical;
@@ -29,6 +31,7 @@ public class AutoShootGroup extends SequentialCommandGroup {
 
     //calculate distance
     double distanceFromLimelightToGoalInches = (RobotMap.goalHeightInches - RobotMap.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
-    addCommands(new TurnToVision(Robot.drive), new adjustAngleCommand(((4.9779 * distanceFromLimelightToGoalInches) + 144.57))  , new ShootCommand(.000805*SmartDashboard.getNumber("Target Distance", 0) + .50058));
+    */
+    addCommands(new TurnToVision(Robot.drive), new adjustAngleCommand(((4.9779 * a) + 144.57))  , new ShootCommand(.000805*SmartDashboard.getNumber("Target Distance", 0) + .50058));
   }
 }

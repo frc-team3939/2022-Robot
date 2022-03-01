@@ -140,6 +140,10 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return ahrs.getDisplacementY();
   }
 
+  public double getZDisplacement(){
+    return ahrs.getDisplacementZ();
+  }
+
   public double gettx() {
     return -NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   }

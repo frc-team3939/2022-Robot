@@ -65,6 +65,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("turnkP", 0);
     SmartDashboard.putNumber("turnkI", 0);
     SmartDashboard.putNumber("turnkD", 0);
+    SmartDashboard.putNumber("Gyro Displacement X", drive.getXDisplacement());
+    SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
     
     //SmartDashboard.putNumber("Distance From Goal to Limelight", distanceFromLimelightToGoalInches);
     SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));

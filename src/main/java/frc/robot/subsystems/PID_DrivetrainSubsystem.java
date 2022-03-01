@@ -128,6 +128,18 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return ahrs.getAngle();
   }
 
+  /**
+   * This returns the x position from the gyro
+   * @return
+   */
+  public double getXDisplacement(){
+    return ahrs.getDisplacementX();
+  }
+
+  public double getYDisplacement(){
+    return ahrs.getDisplacementY();
+  }
+
   public double gettx() {
     return -NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   }

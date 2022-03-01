@@ -145,10 +145,11 @@ public class OI {
     button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
+    button7.whenPressed(new ResetAngleCommand());
     button9.whenPressed(new HomeClimber());
     button10.whenPressed(new SequentialCommandGroup(new adjustAngleCommand(400), new ShootCommand(0.55))); // next to target
     //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
-    button11.whileHeld(new AutoShootGroup(Robot.drive.getDistance()));
+    button11.whileHeld(new AutoShootGroup());
     button12.whenPressed(new Sync_Encoder());
 
 

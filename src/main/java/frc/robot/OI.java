@@ -19,6 +19,7 @@ import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RetractIntake;
+import frc.robot.commands.Intake.ReverseEntireIntake;
 import frc.robot.commands.Intake.RunMiddle;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
 import frc.robot.commands.Shoot.AutoShootCommand;
@@ -30,6 +31,7 @@ import frc.robot.commands.Shoot.IncrementShooterSpeed;
 import frc.robot.commands.Shoot.MoveToAngleCommand;
 import frc.robot.commands.Shoot.ResetAngleCommand;
 import frc.robot.commands.Shoot.ShootCommand;
+import frc.robot.commands.Shoot.ShootCommandAngle;
 import frc.robot.commands.Shoot.StopAngleMotor;
 import frc.robot.commands.Shoot.adjustAngleCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
@@ -151,7 +153,7 @@ public class OI {
     button6.whenPressed(new RetractIntake()); // retract intake
     button7.whenPressed(new Reset_Gyro_Command());
     button9.whenPressed(new HomeClimber());
-    button10.whileHeld(new SequentialCommandGroup(new MoveToAngleCommand(400, false), new ShootCommand(0.55))); // next to target
+    button10.whileHeld(new ShootCommandAngle(0.55, -400)); // next to target
     button11.whileHeld(new AutoShootGroup());
     //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
     //button11.whileHeld(new AutoShootGroup()); 
@@ -167,6 +169,7 @@ public class OI {
     button25.whenPressed(new StopWinch()); // faster pull speed
     button26.whenPressed(new MoveToAngleCommand(0, true));
     button27.whenPressed(new ResetAngleCommand());
+    button28.whenHeld(new ReverseEntireIntake());
     //button28.whenPressed(new HomeAngleLimitSwitchCommand());
     button29.whenPressed(new ShootCommand(SmartDashboard.getNumber("Shooter Speed", 0)));
     //button210.whenPressed(new ShootCommand(0));

@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intake;
   public static OI m_oi;
   public static ClimberSubsystem climber;
-  public Timer timer;
+  Timer timer = new Timer();
   // private Ultrasonic sonic = new Ultrasonic(4, 4);
 
   /**
@@ -177,11 +177,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    new Sync_Encoder();
-    /**timer.reset();
+    timer.reset();
     timer.start();
-    */
-    new ExtendIntake();
   }
 
   /**
@@ -191,20 +188,9 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
     
-    /**if (timer.get() < 0.5) {
-      Robot.drive.drive(1, 0, 0, 0.25); //forward 25%
-    } else if (timer.get() < 3) {
-      Robot.drive.drive(1, 0, 0, 0.15); //forward 15% and start intake
-      new IntakeRunVariableSpeed(0.5, false);
-    } else if (timer.get() < 5) {
-      new ParallelCommandGroup(new IntakeRunVariableSpeed(0, false), new Turn_to_Angle_Command(180));
-    } else if (timer.get() < 12) {
-      new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125, true));
-    } else {
-      new ShootCommand(0);
+    if (timer.get() < 0.5) {
+      
     }
-    */
-    
   }
  
   @Override

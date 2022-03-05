@@ -26,7 +26,7 @@ public class MoveToAngleCommand extends CommandBase {
   @Override
   public void initialize() {
     if (d == false) {
-      Robot.shooter.angleAdjust(c);
+      Robot.shooter.angleAdjust(-c);
     } else {
       Robot.shooter.angleAdjust(-SmartDashboard.getNumber("Shooter Angle", 0));
     }

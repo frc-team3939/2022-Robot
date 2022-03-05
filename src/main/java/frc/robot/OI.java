@@ -25,9 +25,12 @@ import frc.robot.commands.Shoot.AutoShootCommand;
 import frc.robot.commands.Shoot.AutoShootGroup;
 import frc.robot.commands.Shoot.ExpungeWrongColorShooter;
 import frc.robot.commands.Shoot.HomeAngleLimitSwitchCommand;
+import frc.robot.commands.Shoot.IncrementHoodAngle;
+import frc.robot.commands.Shoot.IncrementShooterSpeed;
 import frc.robot.commands.Shoot.MoveToAngleCommand;
 import frc.robot.commands.Shoot.ResetAngleCommand;
 import frc.robot.commands.Shoot.ShootCommand;
+import frc.robot.commands.Shoot.StopAngleMotor;
 import frc.robot.commands.Shoot.adjustAngleCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.commands.climber.HomeClimber;
@@ -141,37 +144,43 @@ public class OI {
     down.whenHeld(new DriveCommandSetValue(-0.3, 0, 0, 0.5));
     left.whenHeld(new DriveCommandSetValue(0, -0.3, 0, 0.5));
     button1.whileHeld(new RunMiddleAndIntake());
-    button2.whileHeld(new AutoShootCommand());
+    
     button3.whileHeld(new ShootCommand(SmartDashboard.getNumber("Shooter Speed Testing", 0)));
     button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
     button7.whenPressed(new Reset_Gyro_Command());
     button9.whenPressed(new HomeClimber());
-    button10.whenPressed(new SequentialCommandGroup(new adjustAngleCommand(400), new ShootCommand(0.55))); // next to target
-    //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
+    button10.whileHeld(new SequentialCommandGroup(new MoveToAngleCommand(400, false), new ShootCommand(0.55))); // next to target
     button11.whileHeld(new AutoShootGroup());
+    //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
+    //button11.whileHeld(new AutoShootGroup()); 
     button12.whenPressed(new Sync_Encoder());
 
 
 
 
-    button21.whenPressed(new WinchPullPosition(0, true)); // starting slow for now, 25%
-    button22.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
-    button23.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
+    button21.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
+    button22.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
+    button23.whenPressed(new WinchPullPosition(0, true)); // TEST
     button24.whenPressed(new ResetEncoder());
     button25.whenPressed(new StopWinch()); // faster pull speed
     button26.whenPressed(new MoveToAngleCommand(0, true));
     button27.whenPressed(new ResetAngleCommand());
-    button28.whenPressed(new HomeAngleLimitSwitchCommand());
-    button29.whenPressed(new ShootCommand(SmartDashboard.getNumber("Shooter Speed Testing", 0)));
-    button210.whenPressed(new ShootCommand(0));
+    //button28.whenPressed(new HomeAngleLimitSwitchCommand());
+    button29.whenPressed(new ShootCommand(SmartDashboard.getNumber("Shooter Speed", 0)));
+    //button210.whenPressed(new ShootCommand(0));
     
-    button35.whenPressed(new RunMiddle(0.5, false, 0, true));
-    button36.whenPressed(new RunMiddle(0, false, 0 , false));
-    button37.whenPressed(new IntakeRunVariableSpeed(0, true));
-    button38.whenPressed(new IntakeRunVariableSpeed(0, false));
-    button39.whenPressed(new IntakeRunVariableSpeed(-0.6, false)); // reverse
+    button31.whenPressed(new WinchPullPosition(350, false)); // go to top
+    button32.whenPressed(new WinchPullPosition(0, false)); // go to zero
+    button33.whenPressed(new IncrementShooterSpeed(0.05));
+    button34.whenPressed(new IncrementShooterSpeed(-0.05));
+    button35.whenPressed(new ShootCommand(0));
+    button36.whenPressed(new MoveToAngleCommand(0, true));
+    button37.whenPressed(new HomeAngleLimitSwitchCommand());
+    button38.whenPressed(new IncrementHoodAngle(100));
+    button39.whenPressed(new IncrementHoodAngle(-100)); 
+    button310.whenPressed(new StopAngleMotor());
     /*button31.whenPressed(new ShooterSpeedCommand(0.2, 1, false)); //FULL POWER
     button32.whenPressed(new RunMiddle(false, 0)); //runs middle motor
     button33.whenPressed(new FireTwoBalls()); // fires two balls
@@ -182,7 +191,7 @@ public class OI {
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());
     // button4.whenPressed(new AimShooterCommand(-4.2, true));//12.9 is for level 1
-    // at blue line, 7
+    // at blue line, 
     // button5.whenPressed(new SpinShooterCommand(1000)); //pull legs up
     // button6.whenPressed(new camera_Command());
     // button7.whenPressed(new AimShooterCommand(0, true));

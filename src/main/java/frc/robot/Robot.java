@@ -5,16 +5,22 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.Turn_to_Angle_Command;
+import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
+import frc.robot.commands.Intake.RunMiddleAndIntake;
+import frc.robot.commands.Shoot.AutoShootGroup;
 import frc.robot.commands.Shoot.LoadShooterCommand;
 import frc.robot.commands.Shoot.ShootCommand;
+import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
@@ -179,6 +185,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     timer.reset();
     timer.start();
+    Robot.drive.angleReset();
+    CommandScheduler.getInstance().schedule(new Sync_Encoder());
   }
 
   /**
@@ -186,11 +194,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    CommandScheduler.getInstance().run();
-    
-    if (timer.get() < 0.5) {
-      
+    if (timer.get() < 2) {
+      CommandScheduler.getInstance().schedule(new ExtendIntake(), new ExtendRetractClimber(false));
+    } else if (timer.get() < 8.4) {
+      CommandScheduler.getInstance().schedule(new RunMiddleAndIntake());
+      if (timer.get() < 5) {
+        CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-0.25, 0, 0, 0.8));
+      } else if (timer.get() < 8.3) {
+        CommandScheduler.getInstance().schedule(true, new Turn_to_Angle_New(180, Robot.drive));
+      } 
+    } else if (timer.get() < 15) {
+      CommandScheduler.getInstance().schedule(new AutoShootGroup());
     }
+    CommandScheduler.getInstance().run();
   }
  
   @Override

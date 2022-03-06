@@ -112,12 +112,17 @@ public class RobotMap {
   /* ---- Max and Mins ---- */
 
   /* ---- Turn Controller PID Tuning ---- */
-  public static final double turnkP = 0.01; // 0.035
-  public static final double turnkI = 0.0; // 0.00825
-  public static final double turnkD = 0.00; // 0.001
+  public static final double turnkP = 0.018; // 0.035
+  public static final double turnkI = 0.00225; // 0.00825
+  public static final double turnkD = 0.000000002; // 0.001
   public static final double turnkF = 0.00;
-  public static final double turnToleracne = 1.0f;
+  public static final double turnToleracne = 0.5f;
 
+  public static final double autokP = 0.013; // 0.035
+  public static final double autokI = 0.00001; // 0.00825
+  public static final double autokD = 0.00001; // 0.001
+  public static final double autokF = 0.00;
+  public static final double autoToleracne = 0.5f;
   /*--- Vision Constants ---*/
   public static final double goalHeightInches = 104.0;
   public static final double limelightLensHeightInches = 23.0;

@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
@@ -14,7 +16,7 @@ import frc.robot.subsystems.PID_DrivetrainSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TurnToVision extends PIDCommand {
+public class AutoTurn extends PIDCommand {
 
   /**
    * This turn the robot to the desired angle (This value is absolute!!!)
@@ -22,15 +24,15 @@ public class TurnToVision extends PIDCommand {
    * @param targetAngleDegrees Angle that you want to turn to 
    * @param drive Pass in the Swerve drive subsystem
    */
-  public TurnToVision(PID_DrivetrainSubsystem drive) {
+  public AutoTurn(double targetAngleDegrees, PID_DrivetrainSubsystem drive) {
     super(
         // The controller that the command will use
         new PIDController(RobotMap.turnkP, RobotMap.turnkI, RobotMap.turnkD),
         //new PIDController(SmartDashboard.getNumber("turnkP", 0), SmartDashboard.getNumber("turnkI", 0), SmartDashboard.getNumber("turnkD", 0)),
         // This should return the measurement
-        drive::gettx,
+        drive::getAngle,
         // This should return the setpoint (can also be a constant)
-        0,
+        targetAngleDegrees,
         // This uses the output
         output -> drive.drive(0, 0, output, .5), 
         

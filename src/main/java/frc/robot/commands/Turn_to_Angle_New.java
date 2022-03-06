@@ -40,7 +40,7 @@ public class Turn_to_Angle_New extends PIDCommand {
 
         addRequirements(Robot.drive);
         getController().enableContinuousInput(-180, 180); //Input is allowed between -180 adn 180 degrees
-        getController().setTolerance(1); //One Degree Tollernce
+        getController().setTolerance(0.5); //One Degree Tollernce
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }

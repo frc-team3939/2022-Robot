@@ -152,9 +152,11 @@ public class DriveModule {
    * encoder. offset = floor(raw_angle / counts_per_rev) * one_rev
    */
   public void fixOffset() {
-    double curr_rev = getEncoder() / countPerHalfRevolution;
+    /*double curr_rev = getEncoder() / countPerHalfRevolution;
     double rot_num = Math.floor(curr_rev) * 1.5;
     offset_revs = (int) rot_num;
+    */
+    offset_revs = 0;
   }
 
   public void updatePID() {

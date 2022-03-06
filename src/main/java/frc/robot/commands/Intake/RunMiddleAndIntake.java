@@ -45,6 +45,10 @@ public class RunMiddleAndIntake extends CommandBase {
       Robot.intake.intakeSpeed(.75);
       Robot.intake.runMiddleMotor(-1);
     }
+    if (Robot.intake.isMiddleLimitActivated() == false && Robot.shooter.feederLimitCheck() == false) {
+      Robot.intake.intakeSpeed(.75);
+      Robot.intake.runMiddleMotor(-1);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

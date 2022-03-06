@@ -145,6 +145,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
     SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     // SmartDashboard.putNumber("Left Leg Encoder", legs.getLeftLeg());
+    SmartDashboard.putNumber("BL Rev", Robot.drive.backLeft.getOffset());
+    SmartDashboard.putNumber("BR Rev", Robot.drive.backRight.getOffset());
+    SmartDashboard.putNumber("FL Rev", Robot.drive.frontLeft.getOffset());
+    SmartDashboard.putNumber("FR Rev", Robot.drive.frontRight.getOffset());
     // SmartDashboard.putNumber("Right Leg Encoder", legs.getRightLeg());
 
     // SmartDashboard.putNumber("Camera Position", cam1.getLocation());
@@ -186,7 +190,11 @@ public class Robot extends TimedRobot {
     timer.reset();
     timer.start();
     Robot.drive.angleReset();
-    CommandScheduler.getInstance().schedule(new Sync_Encoder());
+    //CommandScheduler.getInstance().schedule(new Sync_Encoder());
+    Robot.drive.frontRight.setEncoder(0.5);
+    Robot.drive.frontLeft.setEncoder(0.5);
+    Robot.drive.backRight.setEncoder(-0.5);
+    Robot.drive.backLeft.setEncoder(-0.5);
   }
 
   /**
@@ -212,7 +220,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // new HomeCommandGroup().start();
-    new Sync_Encoder();
+    //new Sync_Encoder();
   }
 
   /**

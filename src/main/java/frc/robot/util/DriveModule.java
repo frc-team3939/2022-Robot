@@ -40,7 +40,7 @@ public class DriveModule {
 
     driveMotor.setIdleMode(IdleMode.kBrake);
     angleMotor.setNeutralMode(NeutralMode.Coast);
-    angleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+    angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, kPIDLoopIdx, kTimeoutMs);
     angleMotor.setSensorPhase(kSensorPhase);
     angleMotor.setInverted(kMotorInvert);
     angleMotor.configNominalOutputForward(0, kTimeoutMs);
@@ -62,19 +62,25 @@ public class DriveModule {
     driveMotor.set(0.0);
   }
 
+  /**
+   * Not being used
+   * @return 0
+   */
   public double getRawAbsEncoder(){
-    return absEncoder.getVoltage();
+    return 0;//absEncoder.getVoltage();
   }
 
   /**
+   * Not being used
+   * 
    * This returns a value 0-5 that has been rotated so that 0 is the passed in adjusted value
-   * @return Value between 0-5V
+   * @return returns 0 //Value between 0-5V
    */
   public double getAdjustedAbsEncoder(){
     if (getRawAbsEncoder() < encoder_offset) {
-      return (5-(getRawAbsEncoder()-encoder_offset));
+      return 0;//(5-(getRawAbsEncoder()-encoder_offset));
     } else {
-      return (getRawAbsEncoder()-encoder_offset);
+      return 0;//(getRawAbsEncoder()-encoder_offset);
     }
   }
 

@@ -40,8 +40,10 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlave = new VictorSPX(shooterslave);
     timingMotor = new TalonSRX(timingmotor);
     timingLimitSwitch = new DigitalInput(1);
-    // hood dio 2
-
+    
+    //Adding in voltage compesation for the battery voltage
+    shooterMotor.enableVoltageCompensation(true);
+    shooterSlave.enableVoltageCompensation(true);
 
     shooterMotor.configVoltageCompSaturation(11.5);
     shooterMotor.enableVoltageCompensation(true);

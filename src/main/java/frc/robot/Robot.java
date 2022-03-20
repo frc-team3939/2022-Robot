@@ -117,6 +117,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
     SmartDashboard.putNumber("Gyro Dispalcement Z", drive.getZDisplacement());
 
+    //Drive Encoder Values on Dashboard
+    SmartDashboard.putNumber("FR Drive Encoder", drive.frontRight.getDriveEncoder());
+    SmartDashboard.putNumber("FL Drive Encoder", drive.frontLeft.getDriveEncoder());
+    SmartDashboard.putNumber("BR Drive Encoder", drive.backRight.getDriveEncoder());
+    SmartDashboard.putNumber("BL Drive Encoder", drive.backLeft.getDriveEncoder());
+
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);

@@ -172,4 +172,8 @@ public class DriveModule {
     angleMotor.config_kF(0, kF);
     angleMotor.config_IntegralZone(0, kIzone);
   }
+
+  public double getDriveEncoder(){
+    return driveMotor.getEncoder().getPosition();
+  }
 }

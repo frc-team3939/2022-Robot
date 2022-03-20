@@ -203,23 +203,12 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return getController().atSetpoint();
   }
 
-public void drivePosition(double p, int i) {}
+  public double getEncoderPos(){
+    double fl =  frontLeft.getDriveEncoder();
+    double fr = frontRight.getDriveEncoder();
+    double bl = backLeft.getDriveEncoder();
+    double br = backRight.getDriveEncoder();
 
-  /**
-   * True will return the distance for the front sensor and false will return the back
-   */
-  /**
-  public double getDistance(Boolean front){
-    double volt;
-    double mV_to_inch = 24;
-    if (front == true) {
-      volt = ultrafront.getVoltage() * 1000;
-      return(volt / mV_to_inch);
-    } else {
-      volt = ultraback.getVoltage() * 1000;
-      return (volt / mV_to_inch);
-    }
+    return((fl + fr + bl + br) / 4);
   }
-  */
-  //public
 }

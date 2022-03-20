@@ -74,7 +74,7 @@ public class RobotMap {
 
   /* ---- PID Tuning for Drivetrain ---- */
 
-  public static double kP = 15.0;
+  public static double kP = 5.0;
   public static double kI = 0.0;
   public static double kD = 0.0;
   public static double kF = 0.0;

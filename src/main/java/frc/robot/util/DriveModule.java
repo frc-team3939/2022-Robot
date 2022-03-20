@@ -42,7 +42,7 @@ public class DriveModule {
     angleMotor.setNeutralMode(NeutralMode.Coast);
     angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, kPIDLoopIdx, kTimeoutMs);
     angleMotor.setSensorPhase(kSensorPhase);
-    angleMotor.setInverted(kMotorInvert);
+    angleMotor.setInverted(false);
     angleMotor.configNominalOutputForward(0, kTimeoutMs);
     angleMotor.configNominalOutputReverse(0, kTimeoutMs);
     angleMotor.configPeakOutputForward(1, kTimeoutMs);
@@ -110,6 +110,7 @@ public class DriveModule {
   public double getAngle() {
     return (getEncoder() / countPerHalfRevolution) - getOffset();
   }
+
 
   public void setAngle(double goal) {
     //long curr = System.currentTimeMillis();

@@ -112,9 +112,9 @@ public class DriveModule {
   }
 
   public void setAngle(double goal) {
-    long curr = System.currentTimeMillis();
+    //long curr = System.currentTimeMillis();
 
-    double diff = Math.abs(getAngle() - goal) % 2;
+    /*double diff = Math.abs(getAngle() - goal) % 2;
     if (diff > 1.0) {
       if (goal >= 0.0 && curr >= time_before_next_down) {
         offset_revs -= 1;
@@ -128,6 +128,7 @@ public class DriveModule {
     }
 
     goal += getOffset();
+    */
     set_encoder_count = goal * countPerHalfRevolution;
     angleMotor.set(ControlMode.Position, set_encoder_count);
   }

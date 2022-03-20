@@ -7,27 +7,16 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ExtendRetractClimber extends CommandBase {
-  /** 
-  * @param onoff This boolean controls which way to fire the pnumeatics - true for angle, false for straight
-  This function either angles or uprights the moving arms of the climber.
-  
-  */
-  boolean o;
-  public ExtendRetractClimber(boolean onoff) {
-    addRequirements(Robot.climber);  
-    o = onoff;
+public class HomeClimber extends CommandBase {
+  /** Creates a new HomeClimber. */
+  public HomeClimber() {
+    addRequirements(Robot.climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  // TRUE MEANS FORWARD
   public void initialize() {
-    if (o == true) {
-      Robot.climber.angleArms();
-    } else {
-      Robot.climber.uprightArms();
-    }
+    Robot.climber.pullWinch(-0.20);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,11 +25,14 @@ public class ExtendRetractClimber extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    Robot.climber.resetEncoder();
+    Robot.climber.pullWinch(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return Robot.climber.checkIfAtLimit();
   }
 }

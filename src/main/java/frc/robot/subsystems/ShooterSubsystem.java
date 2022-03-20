@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import static frc.robot.RobotMap.*;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.Robot;
 //import frc.robot.RobotMap;
@@ -40,7 +41,8 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor = new TalonSRX(shootermotor);
     shooterSlave = new VictorSPX(shooterslave);
     timingMotor = new TalonSRX(timingmotor);
-    timingLimitSwitch = new DigitalInput(0);
+    timingLimitSwitch = new DigitalInput(1);
+    // hood dio 2
 
 
     shooterMotor.configVoltageCompSaturation(11.5);
@@ -48,14 +50,16 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kP(0, shooterP);
     shooterMotor.config_kI(0, shooterI);
     shooterMotor.config_kD(0, shooterD);
-    shooterMotor.setInverted(true);
+    shooterMotor.setInverted(false);
     shooterMotor.setNeutralMode(NeutralMode.Coast);
     shooterSlave.follow(shooterMotor);
     shooterSlave.setInverted(false);
     angleMotor.setInverted(true);
     angleMotor.setNeutralMode(NeutralMode.Brake);
+    angleMotor.configReverseSoftLimitThreshold(-1200);
+    angleMotor.configReverseSoftLimitEnable(true);
     angleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
-    timingMotor.setNeutralMode(NeutralMode.Brake);
+    timingMotor.setNeutralMode(NeutralMode.Coast);
     timingMotor.setInverted(true);
   }
   
@@ -65,6 +69,11 @@ public class ShooterSubsystem extends SubsystemBase {
   public void angleAdjust(double angle) {
     angleMotor.set(ControlMode.Position, angle);
   }
+  
+  /**
+   * Sets the hood motor to a percentage output in speed
+   * @param speed -1.0 to 1.0 percent output
+   */
   public void moveAngle(double speed){
     angleMotor.set(ControlMode.PercentOutput, speed);
   }
@@ -77,15 +86,16 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setshooterSpeed(double shooterSpeed) {
     shooterMotor.set(ControlMode.PercentOutput, shooterSpeed);
   }
-  public void loaderSpin(double timerspeed) {
+  public void feederSpeed(double timerspeed) {
     timingMotor.set(ControlMode.PercentOutput, timerspeed);
   }
   public void resetLimit(){
     angleMotor.setSelectedSensorPosition(0);
   }
   public double shooterencoder(){
-    return angleMotor.getSelectedSensorPosition();
+    return -angleMotor.getSelectedSensorPosition();
   }
+
   public void setEncoderPosition(int position){
     angleMotor.setSelectedSensorPosition(0);
   }
@@ -94,7 +104,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return  true if it is pressed, false if it is not pressed
    */
   public boolean limitCheck(){
-    if (angleMotor.isRevLimitSwitchClosed() == 1){
+    if (angleMotor.isFwdLimitSwitchClosed() == 1){
       return true;
     } else {
       return false;

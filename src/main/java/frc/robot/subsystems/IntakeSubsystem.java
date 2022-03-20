@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
@@ -17,15 +18,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  // TODO Verify real pnumeatic hub IDs when completed
   public DoubleSolenoid solenoidLeft;
   public DoubleSolenoid solenoidRight;
   public TalonSRX intakeMotor;
+  public TalonSRX intermediaryMotor;
+  public DigitalInput middleSwitch;
 
   public IntakeSubsystem() {
-    solenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
-    solenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 4);
+    solenoidLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 2);
+    solenoidRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 0);
     intakeMotor = new TalonSRX(intakemotor);
+    intermediaryMotor = new TalonSRX(intermediarymotor);
+    middleSwitch = new DigitalInput(0);
 
     intakeMotor.setNeutralMode(NeutralMode.Brake);
   }
@@ -41,10 +45,6 @@ public class IntakeSubsystem extends SubsystemBase {
     solenoidRight.set(kReverse);
   }
 
-  public void intakeRunFullSpeed() {
-    intakeMotor.set(ControlMode.PercentOutput, 1.0);
-  }
-
   public void intakeReverse() {
     intakeMotor.set(ControlMode.PercentOutput, -1.0);
   }
@@ -53,13 +53,19 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void intakeRunSetSpeed(double speed) {
+  /**
+   * Runs the intake at the passed in speed
+   * @param speed -1 to 1 percent value
+   */
+  public void intakeSpeed(double speed) {
     intakeMotor.set(ControlMode.PercentOutput, speed);
   }
   
-  // TODO add runIntake() and stopIntake() functions when motor controller is apparent
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void runMiddleMotor(double speed) {
+    intermediaryMotor.set(ControlMode.PercentOutput, speed); //gonna need hte power for this
+  }
+
+  public boolean isMiddleLimitActivated() {
+    return middleSwitch.get();
   }
 }

@@ -14,14 +14,18 @@ import static frc.robot.Robot.*;
  * code includes a deadband of 20% for x and y, and the deadband for rotation is
  * handled by OI.
  */
-public class DriveCommand extends CommandBase {
+public class DriveCommandSetValue extends CommandBase {
 
-  private final PID_DrivetrainSubsystem drive;
-
-  public DriveCommand(PID_DrivetrainSubsystem subsystem) {
-    drive = subsystem;
-    addRequirements(drive);
-
+  double f;
+  double s;
+  double r;
+  double speedMult;
+  public DriveCommandSetValue(double forward, double strafe, double rotation, double speedMultiplier) {
+    addRequirements(Robot.drive);
+    f = forward;
+    s = strafe;
+    r = rotation;
+    speedMult = speedMultiplier;
   }
 
   /**
@@ -48,11 +52,6 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // All on scale -1.0 to 1.0
-    double f = m_oi.getY();
-    double s = -m_oi.getX();
-    double r = m_oi.getTwist();
-    double speedMult = Robot.m_oi.getThrottle() / 2.0 + 0.5;
-
     Robot.drive.drive(f, s, r, speedMult);
   }
 

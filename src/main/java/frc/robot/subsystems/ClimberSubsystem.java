@@ -4,15 +4,17 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxRelativeEncoder.*;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxLimitSwitch;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsBase;
-import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,15 +26,36 @@ public class ClimberSubsystem extends SubsystemBase {
   public DoubleSolenoid rightArm;
   public DigitalInput leftLimitSwitch;
   public DigitalInput rightLimitSwitch;
+  public RelativeEncoder encoder;
+  public SparkMaxPIDController winchPID;
+  public SparkMaxLimitSwitch limit;
   
   public ClimberSubsystem() {
     winch = new CANSparkMax(climbermotor, MotorType.kBrushless);
-    leftArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 5, 6);
-    rightArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 7, 8); //change ids for 1-8
-    leftLimitSwitch = new DigitalInput(2);
-    rightLimitSwitch = new DigitalInput(3);
+    encoder = winch.getEncoder(Type.kHallSensor, 42);
+    limit = winch.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+    
+    limit.enableLimitSwitch(true);
+    winchPID = winch.getPIDController();
+
+    leftArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 5, 4);
+    rightArm = new DoubleSolenoid(PneumaticsModuleType.REVPH, 6, 7); //change ids for 1-8
+    leftLimitSwitch = new DigitalInput(4);
+    rightLimitSwitch = new DigitalInput(5);
 
     winch.setIdleMode(IdleMode.kBrake);
+    winch.setSoftLimit(SoftLimitDirection.kForward, 350);
+
+    winchPID.setOutputRange(-1, 1);
+    winchPID.setP(5e-5);
+    winchPID.setI(1e-6);
+    winchPID.setD(0);
+    winchPID.setIZone(0);
+    winchPID.setFF(0.000156);
+    winchPID.setSmartMotionMaxVelocity(4200, 0);
+    winchPID.setSmartMotionMinOutputVelocity(0, 0);
+    winchPID.setSmartMotionMaxAccel(3250, 0);
+    winchPID.setSmartMotionAllowedClosedLoopError(0.01, 0);
   }
 
   public void angleArms() {
@@ -49,8 +72,19 @@ public class ClimberSubsystem extends SubsystemBase {
     winch.set(s);
   }
   
+  public void resetEncoder() {
+    encoder.setPosition(0);
+  }
+
+  public double getEncoder() {
+    return encoder.getPosition();
+  }
+
+  public void goToEncoder(double pos) {
+    winchPID.setReference(pos, CANSparkMax.ControlType.kSmartMotion);
+  }
   public boolean checkIfAtLimit() {
-    if (leftLimitSwitch.get() == true || rightLimitSwitch.get() == true) {
+    if (limit.isPressed() == true) {
       return true;
     } else {
       return false;
@@ -63,6 +97,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public void lockWinch() {
     winch.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void stopWinch() {
+    winchPID.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
   @Override
   public void periodic() {

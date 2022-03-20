@@ -2,32 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.climber;
+package frc.robot.commands.Shoot;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ExtendRetractClimber extends CommandBase {
-  /** 
-  * @param onoff This boolean controls which way to fire the pnumeatics - true for angle, false for straight
-  This function either angles or uprights the moving arms of the climber.
-  
-  */
-  boolean o;
-  public ExtendRetractClimber(boolean onoff) {
-    addRequirements(Robot.climber);  
-    o = onoff;
+public class ShooterStopCommand extends CommandBase {
+  /** Creates a new ShooterStopCommand. */
+  public ShooterStopCommand() {
+    addRequirements(Robot.shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  // TRUE MEANS FORWARD
   public void initialize() {
-    if (o == true) {
-      Robot.climber.angleArms();
-    } else {
-      Robot.climber.uprightArms();
-    }
+    Robot.shooter.setshooterSpeed(0);
+    Robot.shooter.feederSpeed(0);
+    Robot.intake.runMiddleMotor(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

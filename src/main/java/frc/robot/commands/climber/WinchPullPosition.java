@@ -4,39 +4,43 @@
 
 package frc.robot.commands.climber;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ExtendRetractClimber extends CommandBase {
-  /** 
-  * @param onoff This boolean controls which way to fire the pnumeatics - true for angle, false for straight
-  This function either angles or uprights the moving arms of the climber.
+public class WinchPullPosition extends CommandBase {
+  /** Creates a new WinchPullPosition. */
+  double p;
+  boolean d;
   
-  */
-  boolean o;
-  public ExtendRetractClimber(boolean onoff) {
-    addRequirements(Robot.climber);  
-    o = onoff;
+  public WinchPullPosition(double position, boolean fromDash) {
+    addRequirements(Robot.climber);
+    p = position;
+    d = fromDash;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  // TRUE MEANS FORWARD
   public void initialize() {
-    if (o == true) {
-      Robot.climber.angleArms();
+    if (d == false) {
+      Robot.climber.goToEncoder(p);
     } else {
-      Robot.climber.uprightArms();
+      Robot.climber.goToEncoder(SmartDashboard.getNumber("Climber Goto", 0));
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if (interrupted == true) 
+      Robot.climber.stopWinch();
+  }
 
   // Returns true when the command should end.
   @Override

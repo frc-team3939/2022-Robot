@@ -2,18 +2,43 @@ package frc.robot;
 
 import java.lang.Math;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.commandgroups.AutoShootCommandGroup;
+import frc.commandgroups.FireTwoBalls;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveCommandSetValue;
+import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
+import frc.robot.commands.TurnToVision;
 import frc.robot.commands.Turn_to_Angle_Command;
+import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RetractIntake;
+import frc.robot.commands.Intake.ReverseEntireIntake;
+import frc.robot.commands.Intake.RunMiddle;
+import frc.robot.commands.Intake.RunMiddleAndIntake;
+import frc.robot.commands.Shoot.AutoShootCommand;
+import frc.robot.commands.Shoot.AutoShootGroup;
+import frc.robot.commands.Shoot.ExpungeWrongColorShooter;
+import frc.robot.commands.Shoot.HomeAngleLimitSwitchCommand;
+import frc.robot.commands.Shoot.IncrementHoodAngle;
+import frc.robot.commands.Shoot.IncrementShooterSpeed;
+import frc.robot.commands.Shoot.MoveToAngleCommand;
+import frc.robot.commands.Shoot.ResetAngleCommand;
+import frc.robot.commands.Shoot.ShootCommand;
+import frc.robot.commands.Shoot.ShootCommandAngle;
+import frc.robot.commands.Shoot.StopAngleMotor;
+import frc.robot.commands.Shoot.adjustAngleCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
-import frc.robot.commands.climber.ReleaseWinch;
-import frc.robot.commands.climber.WinchPull;
+import frc.robot.commands.climber.HomeClimber;
+import frc.robot.commands.climber.ResetEncoder;
+import frc.robot.commands.climber.StopWinch;
+import frc.robot.commands.climber.WinchPullPosition;
 
 import static frc.robot.RobotMap.*;
 
@@ -38,7 +63,7 @@ public class OI {
   Button button9;
   Button button10;
   Button button11;
-  public Button button12;
+  Button button12;
 
   Button button21;
   Button button22;
@@ -61,8 +86,10 @@ public class OI {
   Button button38;
   Button button39;
   Button button310;
-  Button button311;
-
+  POVButton up;
+  POVButton right;
+  POVButton down;
+  POVButton left;
   /**
    * Initialize the joystick and it's buttons. After initialization, attach any
    * commands to there buttons.
@@ -73,6 +100,10 @@ public class OI {
     stick3 = new Joystick(joystick3Id);
 
     // Joystick 1 Buttons
+    up = new POVButton(stick, 0);
+    right = new POVButton(stick, 90);
+    down = new POVButton(stick, 180);
+    left = new POVButton(stick, 270);
     button1 = new JoystickButton(stick, 1);
     button2 = new JoystickButton(stick, 2);
     button3 = new JoystickButton(stick, 3);
@@ -96,6 +127,7 @@ public class OI {
     button28 = new JoystickButton(stick2, 8);
     button29 = new JoystickButton(stick2, 9);
     button210 = new JoystickButton(stick2, 10);
+    
     // Joystick 3 Buttons
     button31 = new JoystickButton(stick3, 1);
     button32 = new JoystickButton(stick3, 2);
@@ -107,29 +139,62 @@ public class OI {
     button38 = new JoystickButton(stick3, 8);
     button39 = new JoystickButton(stick3, 9);
     button310 = new JoystickButton(stick3, 10);
-    button311 = new JoystickButton(stick3, 11);
 
     // Joystick 1 Actions
-    button1.whenPressed(new Sync_Encoder()); // sync encoders
+    up.whenHeld(new DriveCommandSetValue(0.3, 0, 0, 0.5));
+    right.whenHeld(new DriveCommandSetValue(0, 0.3, 0, 0.5));
+    down.whenHeld(new DriveCommandSetValue(-0.3, 0, 0, 0.5));
+    left.whenHeld(new DriveCommandSetValue(0, -0.3, 0, 0.5));
+    button1.whileHeld(new RunMiddleAndIntake());
     
-    // button2.whenHeld(new DriveCommand(Robot.drive)); // unused?
-    button3.whenPressed(new Turn_to_Angle_Command(90)); // UNTESTED turn robot to specified angle (degrees)
-    button4.whenPressed(new AutoShootCommandGroup()); // autoshoot but no shoot values yet
+    button3.whileHeld(new ShootCommand(SmartDashboard.getNumber("Shooter Speed Testing", 0)));
+    button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
-    button7.whenPressed(new IntakeRunVariableSpeed(1.0)); //FULL SPEED INTAKE
-    button8.whenPressed(new IntakeRunVariableSpeed(0)); // STOP INTAKE
-    button9.whenPressed(new IntakeRunVariableSpeed(-1.0)); // FULL SPEED INTAKE REVERSE
-    button21.whenPressed(new WinchPull(0.25)); // starting slow for now, 25%
-    button22.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
-    button23.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
-    button24.whenPressed(new ReleaseWinch()); // release winch motor
-    button25.whenPressed(new WinchPull(0.5)); // faster pull speed
+    button7.whenPressed(new Reset_Gyro_Command());
+    button9.whenPressed(new HomeClimber());
+    button10.whileHeld(new ShootCommandAngle(0.55, -400)); // next to target
+    button11.whileHeld(new AutoShootGroup());
+    //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
+    //button11.whileHeld(new AutoShootGroup()); 
+    button12.whenPressed(new Sync_Encoder());
+
+
+
+
+    button21.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
+    button22.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
+    button23.whenPressed(new WinchPullPosition(0, true)); // TEST
+    button24.whenPressed(new ResetEncoder());
+    button25.whenPressed(new StopWinch()); // faster pull speed
+    button26.whenPressed(new MoveToAngleCommand(0, true));
+    button27.whenPressed(new ResetAngleCommand());
+    button28.whenHeld(new ReverseEntireIntake());
+    //button28.whenPressed(new HomeAngleLimitSwitchCommand());
+    button29.whenPressed(new ShootCommand(SmartDashboard.getNumber("Shooter Speed", 0)));
+    button210.whenPressed(new Turn_to_Angle_New(180, Robot.drive));
+    
+    button31.whenPressed(new WinchPullPosition(205, false)); // go to top
+    button32.whenPressed(new WinchPullPosition(0, false)); // go to zero
+    button33.whenPressed(new IncrementShooterSpeed(0.05));
+    button34.whenPressed(new IncrementShooterSpeed(-0.05));
+    button35.whenPressed(new ShootCommand(0));
+    button36.whenPressed(new MoveToAngleCommand(0, true));
+    button37.whenPressed(new HomeAngleLimitSwitchCommand());
+    button38.whenPressed(new IncrementHoodAngle(100));
+    button39.whenPressed(new IncrementHoodAngle(-100)); 
+    button310.whenPressed(new StopAngleMotor());
+    /*button31.whenPressed(new ShooterSpeedCommand(0.2, 1, false)); //FULL POWER
+    button32.whenPressed(new RunMiddle(false, 0)); //runs middle motor
+    button33.whenPressed(new FireTwoBalls()); // fires two balls
+    button34.whenPressed(new ExpungeWrongColorShooter());
+    button35.whenPressed(new HomeAngleLimitSwitchCommand());*/
+    
 //button1.whenPressed(new MatchLocANDAbsEncoderCommand(Robot.drive));
     //button3.whenPressed(new SetAngle(100, 0.7));
     // button3.whenReleased(new camera_Command());
     // button4.whenPressed(new AimShooterCommand(-4.2, true));//12.9 is for level 1
-    // at blue line, 7
+    // at blue line, 
     // button5.whenPressed(new SpinShooterCommand(1000)); //pull legs up
     // button6.whenPressed(new camera_Command());
     // button7.whenPressed(new AimShooterCommand(0, true));

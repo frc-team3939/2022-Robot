@@ -8,33 +8,52 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class IntakeRunVariableSpeed extends CommandBase {
-  double speed;
-  boolean d;
-  public IntakeRunVariableSpeed(double intakeSpeed, boolean fromDash) {
+public class RunMiddle extends CommandBase {
+  
+  boolean r;
+  int d;
+  int i;
+  boolean dash;
+  double s;
+  /**
+   * 
+   * @param reverse reverse the middle motor if true
+   * @param delayInSchedulerCycles delay middle motor running, 50 per second
+   */
+  public RunMiddle(double speed, boolean reverse, int delayInSchedulerCycles, boolean fromDashboard) {
     addRequirements(Robot.intake);
-    speed = intakeSpeed;
-    d = fromDash;
+    r = reverse;
+    d = delayInSchedulerCycles;
+    dash = fromDashboard;
+    s = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (d == false){
-      Robot.intake.intakeSpeed(speed);
-    } else {
-      Robot.intake.intakeSpeed(SmartDashboard.getNumber("JustIntakeSpeed", 0));
-    }
+    i = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    i++;
+    if (dash == false) {
+      if (i > d) {
+        Robot.intake.runMiddleMotor(s);
+      } else {
+        Robot.intake.runMiddleMotor(0);
+      }
+    } else {
+      Robot.intake.runMiddleMotor(-SmartDashboard.getNumber("MiddleSpeed", 0));
+    }
+    
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.intake.intakeStop();
+    Robot.intake.runMiddleMotor(0);
   }
 
   // Returns true when the command should end.

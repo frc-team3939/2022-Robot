@@ -112,10 +112,10 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     }
 
     // Write angle and speed to each module
-    backLeft.move(ws1, wa1);
-    backRight.move(ws2, wa2);
-    frontRight.move(ws3, wa3);
-    frontLeft.move(ws4, wa4);
+    backLeft.move(ws1, 0);
+    backRight.move(ws2, 0);
+    frontRight.move(ws3, 0);
+    frontLeft.move(ws4, 0);
 
     // Speed multiplier from throttle
     frontRight.setSpeedMultiplier(speedMult);

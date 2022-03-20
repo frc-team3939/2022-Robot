@@ -149,9 +149,6 @@ public class OI {
     //button11.whileHeld(new AutoShootGroup()); 
     button12.whenPressed(new Sync_Encoder());
 
-
-
-
     button21.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
     button22.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
     button23.whenPressed(new WinchPullPosition(0, true)); // TEST

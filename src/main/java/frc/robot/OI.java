@@ -11,7 +11,6 @@ import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.TurnToVision;
 import frc.robot.commands.Turn_to_Angle_New;
-import frc.robot.commands.Update_PID;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.RetractIntake;
 import frc.robot.commands.Intake.ReverseEntireIntake;
@@ -164,7 +163,7 @@ public class OI {
     
     button31.whenPressed(new WinchPullPosition(205, false)); // go to top
     button32.whenPressed(new WinchPullPosition(0, false)); // go to zero
-    button33.whenPressed(new Update_PID());
+    //button33.whenPressed();
     button34.whenPressed(new IncrementShooterSpeed(-0.05));
     button35.whenPressed(new ShootCommand(0));
     button36.whenPressed(new MoveToAngleCommand(0, true));

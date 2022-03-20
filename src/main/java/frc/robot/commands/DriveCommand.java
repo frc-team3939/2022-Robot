@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
@@ -39,6 +40,9 @@ public class DriveCommand extends CommandBase {
     drive.backLeft.setSpeed(0);
     drive.backRight.setSpeed(0);
     */
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+
   }
 
   /**
@@ -48,6 +52,7 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // All on scale -1.0 to 1.0
+
     double f = m_oi.getY();
     double s = -m_oi.getX();
     double r = m_oi.getTwist();

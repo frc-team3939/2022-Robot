@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
+import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
@@ -218,7 +219,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // new HomeCommandGroup().start();
-    //new Sync_Encoder();
+    //TODO: Remove the following init
+    new Sync_Encoder();
   }
 
   /**

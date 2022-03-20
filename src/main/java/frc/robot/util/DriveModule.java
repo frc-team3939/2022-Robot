@@ -171,10 +171,10 @@ public class DriveModule {
   }
 
   public void updatePID() {
-    angleMotor.config_kP(0, SmartDashboard.getNumber("kP", 1));
-    angleMotor.config_kI(0, SmartDashboard.getNumber("kI", 0));
-    angleMotor.config_kD(0, SmartDashboard.getNumber("kD", 0));
-    angleMotor.config_kF(0, SmartDashboard.getNumber("kF", 0));
+    angleMotor.config_kP(0, SmartDashboard.getNumber("turnkP", 1));
+    angleMotor.config_kI(0, SmartDashboard.getNumber("turnkI", 0));
+    angleMotor.config_kD(0, SmartDashboard.getNumber("turnkD", 0));
+    angleMotor.config_kF(0, SmartDashboard.getNumber("turnkF", 0));
     angleMotor.config_IntegralZone(0, kIzone);
   }
 

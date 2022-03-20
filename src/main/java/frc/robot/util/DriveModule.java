@@ -47,7 +47,7 @@ public class DriveModule {
     angleMotor.configNominalOutputReverse(0, kTimeoutMs);
     angleMotor.configPeakOutputForward(1, kTimeoutMs);
     angleMotor.configPeakOutputReverse(-1, kTimeoutMs);
-    angleMotor.configAllowableClosedloopError(kPIDLoopIdx, 5, kTimeoutMs);
+    angleMotor.configAllowableClosedloopError(kPIDLoopIdx, 10, kTimeoutMs);
     angleMotor.config_kP(0, 1);
 
     driveMotor.set(0.0);

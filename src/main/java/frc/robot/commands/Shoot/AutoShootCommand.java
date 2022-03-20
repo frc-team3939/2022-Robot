@@ -10,7 +10,6 @@ package frc.robot.commands.Shoot;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 public class AutoShootCommand extends CommandBase {
   double ss;
   int i,ii;

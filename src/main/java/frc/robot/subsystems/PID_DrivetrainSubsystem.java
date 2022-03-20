@@ -203,23 +203,65 @@ public class PID_DrivetrainSubsystem extends PIDSubsystem {
     return getController().atSetpoint();
   }
 
-public void drivePosition(double p, int i) {}
+  /**
+   * Returns the average of the all of the drive encoders
+   * @return double average encoder position
+   */
+  public double getDriveEncoder(){
+    double fl = frontLeft.getDriveEncoder();
+    double fr = frontRight.getDriveEncoder();
+    double bl = backLeft.getDriveEncoder();
+    double br = backRight.getDriveEncoder();
+
+    return ((fl + fr + bl + br) / 4);
+  }
 
   /**
-   * True will return the distance for the front sensor and false will return the back
+   * Returns the selected drive motor encoder count
+   * @param front True if the motor is in the front of the bot
+   * @param left  True if the motor is in the left of the bot
+   * @return Drive encoder at selected motor
    */
-  /**
-  public double getDistance(Boolean front){
-    double volt;
-    double mV_to_inch = 24;
-    if (front == true) {
-      volt = ultrafront.getVoltage() * 1000;
-      return(volt / mV_to_inch);
+  public double getDriveEncoder(Boolean front, Boolean left){
+    if (front) {
+      if (left) {
+        return frontLeft.getDriveEncoder();
+      } else {
+        return frontRight.getDriveEncoder();
+      }
     } else {
-      volt = ultraback.getVoltage() * 1000;
-      return (volt / mV_to_inch);
+      if (left) {
+        return backLeft.getDriveEncoder();
+      } else {
+        return backRight.getDriveEncoder();
+      }
     }
   }
-  */
-  //public
+
+  /**
+   * Resets all of the values of the drive encoders
+   */
+  public void resetDriveEncoder(){
+    frontRight.resetDriveEncoder();
+    frontLeft.resetDriveEncoder();
+    backRight.resetDriveEncoder();
+    backLeft.resetDriveEncoder();
+  }
+
+  public void resetDriveEncoder(Boolean front, Boolean left){
+    if (front) {
+      if (left) {
+        frontLeft.resetDriveEncoder();
+      } else {
+        frontRight.resetDriveEncoder();;
+      }
+    } else {
+      if (left) {
+        backLeft.resetDriveEncoder();
+      } else {
+        backRight.resetDriveEncoder();
+      }
+    }
+  }
+
 }

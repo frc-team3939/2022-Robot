@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -170,10 +171,10 @@ public class DriveModule {
   }
 
   public void updatePID() {
-    angleMotor.config_kP(0, kP);
-    angleMotor.config_kI(0, kI);
-    angleMotor.config_kD(0, kD);
-    angleMotor.config_kF(0, kF);
+    angleMotor.config_kP(0, SmartDashboard.getNumber("kP", 1));
+    angleMotor.config_kI(0, SmartDashboard.getNumber("kI", 0));
+    angleMotor.config_kD(0, SmartDashboard.getNumber("kD", 0));
+    angleMotor.config_kF(0, SmartDashboard.getNumber("kF", 0));
     angleMotor.config_IntegralZone(0, kIzone);
   }
 

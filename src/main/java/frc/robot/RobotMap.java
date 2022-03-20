@@ -81,7 +81,7 @@ public class RobotMap {
   public static int kIzone = 0;
   // public static double kPeakOutput = 1.0;
 
-  public static boolean kSensorPhase = true;
+  public static boolean kSensorPhase = false;
   public static boolean kMotorInvert = false;
 
   public static final Gains legGains = new Gains(15, 0.0, 0.0, 0.2, 0, 1.0);

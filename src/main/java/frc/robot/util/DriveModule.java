@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import frc.robot.commands.Intake.RetractIntake;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -165,5 +166,13 @@ public class DriveModule {
     angleMotor.config_kD(0, kD);
     angleMotor.config_kF(0, kF);
     angleMotor.config_IntegralZone(0, kIzone);
+  }
+
+  public double getDriveEncoder(){
+    return driveMotor.getEncoder().getPosition();
+  }
+
+  public void resetDriveEncoder(){
+    driveMotor.getEncoder().setPosition(0);
   }
 }

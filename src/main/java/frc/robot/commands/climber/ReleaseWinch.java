@@ -6,6 +6,7 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.ClimberSubsystem;
 
 public class ReleaseWinch extends CommandBase {
   /** Releases winch, effectively extending the arm. When interrupted it will lock the motor again such that it can be pulled. */

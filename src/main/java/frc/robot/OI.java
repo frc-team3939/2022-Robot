@@ -137,8 +137,9 @@ public class OI {
     left.whenHeld(new DriveCommandSetValue(0, -0.3, 0, 0.5));
     button1.whileHeld(new RunMiddleAndIntake());
     
-    button3.whileHeld(new ShootCommand(SmartDashboard.getNumber("Shooter Speed Testing", 0)));
-    button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
+    button3.whileHeld(new ShootCommandAngle(0.66466, -925));
+    //button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
+    // insert button 4 wall shot
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
     button7.whenPressed(new Reset_Gyro_Command());

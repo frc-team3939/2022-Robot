@@ -21,8 +21,8 @@ public class Auto_ShootSpeed_Command extends CommandBase {
   @Override
   public void initialize() {
     i = 0;
-    Robot.shooter.setshooterSpeed((.000805*SmartDashboard.getNumber("Target Distance", 0)) + .50058);
-    SmartDashboard.putNumber("Auto Shooter Speed", (.000805*SmartDashboard.getNumber("Target Distance", 0)) + .50058);
+    Robot.shooter.setshooterSpeed((.00081*SmartDashboard.getNumber("Target Distance", 0)) + .54058);
+    SmartDashboard.putNumber("Auto Shooter Speed", (.00081*SmartDashboard.getNumber("Target Distance", 0)) + .54058);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,7 +30,7 @@ public class Auto_ShootSpeed_Command extends CommandBase {
   public void execute() {
     i= i + 1;
     //ss = 70;//(SmartDashboard.getNumber("Speed", 0)); //Delete when speed is decided on
-    Robot.shooter.setshooterSpeed((.000805*SmartDashboard.getNumber("Target Distance", 0)) + .50058);
+    Robot.shooter.setshooterSpeed((.00081*SmartDashboard.getNumber("Target Distance", 0)) + .54058);
     if(i > 75){
       Robot.shooter.feederSpeed(0.5);
       Robot.intake.runMiddleMotor(-1);

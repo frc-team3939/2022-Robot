@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -9,10 +10,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Sync_Encoder;
+import frc.robot.commands.TurnToVision;
 import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
+import frc.robot.commands.Shoot.AutoHood_Command;
 import frc.robot.commands.Shoot.AutoShootGroup;
+import frc.robot.commands.Shoot.Auto_ShootSpeed_Command;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -36,6 +40,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intake;
   public static OI m_oi;
   public static ClimberSubsystem climber;
+  int n = 0;
   Timer timer = new Timer();
   // private Ultrasonic sonic = new Ultrasonic(4, 4);
 
@@ -69,6 +74,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
     SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     //SmartDashboard.putNumber("Camera", 1);
+    CameraServer.startAutomaticCapture();
   }
 
   /**
@@ -190,10 +196,6 @@ public class Robot extends TimedRobot {
     timer.start();
     Robot.drive.angleReset();
     //CommandScheduler.getInstance().schedule(new Sync_Encoder());
-    Robot.drive.frontRight.setEncoder(0.5);
-    Robot.drive.frontLeft.setEncoder(0.5);
-    Robot.drive.backRight.setEncoder(-0.5);
-    Robot.drive.backLeft.setEncoder(-0.5);
   }
 
   /**
@@ -201,17 +203,22 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    if (timer.get() < 2) {
+    if (timer.get() < 1) {
       CommandScheduler.getInstance().schedule(new ExtendIntake(), new ExtendRetractClimber(false));
-    } else if (timer.get() < 8.4) {
+    } else if (timer.get() < 5.9) {
       CommandScheduler.getInstance().schedule(new RunMiddleAndIntake());
-      if (timer.get() < 5) {
+      if (timer.get() < 4) {
         CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-0.25, 0, 0, 0.8));
-      } else if (timer.get() < 8.3) {
+      } else if (timer.get() < 5.8) {
         CommandScheduler.getInstance().schedule(true, new Turn_to_Angle_New(180, Robot.drive));
       } 
+    } else if (timer.get() < 7) {
+      CommandScheduler.getInstance().schedule(new AutoHood_Command(), new TurnToVision(Robot.drive));
     } else if (timer.get() < 15) {
-      CommandScheduler.getInstance().schedule(new AutoShootGroup());
+      if (n == 0) {
+        CommandScheduler.getInstance().schedule(new Auto_ShootSpeed_Command());
+        n = 1;
+      }
     }
     CommandScheduler.getInstance().run();
   }
@@ -220,7 +227,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     // new HomeCommandGroup().start();
     //TODO: Remove the following init
-    new Sync_Encoder();
+    
   }
 
   /**

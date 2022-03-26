@@ -6,6 +6,7 @@ package frc.robot.commands.Shoot;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
+import frc.robot.commands.LimelightVisionToggle;
 import frc.robot.commands.TurnToVision;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -33,6 +34,6 @@ public class AutoShootGroup extends SequentialCommandGroup {
     double distanceFromLimelightToGoalInches = (RobotMap.goalHeightInches - RobotMap.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
     */
 
-    addCommands(new TurnToVision(Robot.drive), new AutoHood_Command() , new Auto_ShootSpeed_Command());
+    addCommands(new LimelightVisionToggle(false), new TurnToVision(Robot.drive), new AutoHood_Command() , new Auto_ShootSpeed_Command());
   }
 }

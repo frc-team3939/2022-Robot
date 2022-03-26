@@ -195,6 +195,7 @@ public class Robot extends TimedRobot {
     timer.reset();
     timer.start();
     Robot.drive.angleReset();
+    CommandScheduler.getInstance().schedule(new Sync_Encoder());
     //CommandScheduler.getInstance().schedule(new Sync_Encoder());
   }
 

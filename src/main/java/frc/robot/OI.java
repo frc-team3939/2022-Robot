@@ -3,6 +3,7 @@ package frc.robot;
 import java.lang.Math;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -137,9 +138,10 @@ public class OI {
     left.whenHeld(new DriveCommandSetValue(0, -0.3, 0, 0.5));
     button1.whileHeld(new RunMiddleAndIntake());
     
-    button3.whileHeld(new ShootCommandAngle(0.66466, -925));
+    button3.whileHeld(new ShootCommandAngle(0.69466, -925));
     //button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     // insert button 4 wall shot
+    button4.whileHeld(new ParallelCommandGroup(new ExtendRetractClimber(false), new ShootCommandAngle(0.55, -240)));
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
     button7.whenPressed(new Reset_Gyro_Command());
@@ -156,7 +158,7 @@ public class OI {
     button24.whenPressed(new ResetEncoder());
     button25.whenPressed(new StopWinch()); // faster pull speed
     button26.whenPressed(new ResetAngleCommand());
-    button27.whenPressed(new ResetAngleCommand());
+    button27.whileHeld(new ShootCommandAngle(1, -300)); // hail mary
     button28.whenHeld(new ReverseEntireIntake());
     //button28.whenPressed(new HomeAngleLimitSwitchCommand());
     button29.whenPressed(new ExtendIntake());

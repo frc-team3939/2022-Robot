@@ -75,6 +75,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     //SmartDashboard.putNumber("Camera", 1);
     CameraServer.startAutomaticCapture();
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
   }
 
   /**
@@ -196,6 +197,7 @@ public class Robot extends TimedRobot {
     timer.start();
     Robot.drive.angleReset();
     CommandScheduler.getInstance().schedule(new Sync_Encoder());
+    // TODO remove when fixed
     //CommandScheduler.getInstance().schedule(new Sync_Encoder());
   }
 
@@ -228,7 +230,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     // new HomeCommandGroup().start();
     //TODO: Remove the following init
-    
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
   }
 
   /**

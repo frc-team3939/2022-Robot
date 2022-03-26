@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.DriveCommandSetValue;
+import frc.robot.commands.LimelightVisionToggle;
 import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.TurnToVision;
@@ -145,6 +146,7 @@ public class OI {
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
     button7.whenPressed(new Reset_Gyro_Command());
+    button8.whenPressed(new LimelightVisionToggle(true));
     button9.whenPressed(new HomeClimber());
     button10.whileHeld(new ShootCommandAngle(0.55, -400)); // next to target
     button11.whileHeld(new AutoShootGroup());
@@ -158,7 +160,7 @@ public class OI {
     button24.whenPressed(new ResetEncoder());
     button25.whenPressed(new StopWinch()); // faster pull speed
     button26.whenPressed(new ResetAngleCommand());
-    button27.whileHeld(new ShootCommandAngle(1, -300)); // hail mary
+    button27.whileHeld(new ShootCommandAngle(1, -1200)); // hail mary BREAK GLASS IN CASE OF EMERGENCY
     button28.whenHeld(new ReverseEntireIntake());
     //button28.whenPressed(new HomeAngleLimitSwitchCommand());
     button29.whenPressed(new ExtendIntake());

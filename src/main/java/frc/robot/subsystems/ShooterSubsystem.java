@@ -19,8 +19,6 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import static frc.robot.RobotMap.*;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 //import frc.robot.Robot;
 //import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,8 +40,10 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterSlave = new VictorSPX(shooterslave);
     timingMotor = new TalonSRX(timingmotor);
     timingLimitSwitch = new DigitalInput(1);
-    // hood dio 2
-
+    
+    //Adding in voltage compesation for the battery voltage
+    shooterMotor.enableVoltageCompensation(true);
+    shooterSlave.enableVoltageCompensation(true);
 
     shooterMotor.configVoltageCompSaturation(11.5);
     shooterMotor.enableVoltageCompensation(true);

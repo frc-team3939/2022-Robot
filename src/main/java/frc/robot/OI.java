@@ -3,28 +3,19 @@ package frc.robot;
 import java.lang.Math;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.commandgroups.AutoShootCommandGroup;
-import frc.commandgroups.FireTwoBalls;
-import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.TurnToVision;
-import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
-import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RetractIntake;
 import frc.robot.commands.Intake.ReverseEntireIntake;
-import frc.robot.commands.Intake.RunMiddle;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
-import frc.robot.commands.Shoot.AutoShootCommand;
 import frc.robot.commands.Shoot.AutoShootGroup;
-import frc.robot.commands.Shoot.ExpungeWrongColorShooter;
 import frc.robot.commands.Shoot.HomeAngleLimitSwitchCommand;
 import frc.robot.commands.Shoot.IncrementHoodAngle;
 import frc.robot.commands.Shoot.IncrementShooterSpeed;
@@ -33,7 +24,6 @@ import frc.robot.commands.Shoot.ResetAngleCommand;
 import frc.robot.commands.Shoot.ShootCommand;
 import frc.robot.commands.Shoot.ShootCommandAngle;
 import frc.robot.commands.Shoot.StopAngleMotor;
-import frc.robot.commands.Shoot.adjustAngleCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.commands.climber.HomeClimber;
 import frc.robot.commands.climber.ResetEncoder;
@@ -159,9 +149,6 @@ public class OI {
     //button11.whileHeld(new AutoShootGroup()); 
     button12.whenPressed(new Sync_Encoder());
 
-
-
-
     button21.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
     button22.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
     button23.whenPressed(new WinchPullPosition(0, true)); // TEST
@@ -176,7 +163,7 @@ public class OI {
     
     button31.whenPressed(new WinchPullPosition(205, false)); // go to top
     button32.whenPressed(new WinchPullPosition(0, false)); // go to zero
-    button33.whenPressed(new IncrementShooterSpeed(0.05));
+    //button33.whenPressed();
     button34.whenPressed(new IncrementShooterSpeed(-0.05));
     button35.whenPressed(new ShootCommand(0));
     button36.whenPressed(new MoveToAngleCommand(0, true));

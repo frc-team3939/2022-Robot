@@ -40,14 +40,15 @@ public class DriveModule {
 
     driveMotor.setIdleMode(IdleMode.kBrake);
     angleMotor.setNeutralMode(NeutralMode.Coast);
-    angleMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDLoopIdx, kTimeoutMs);
+    angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, kPIDLoopIdx, kTimeoutMs);
     angleMotor.setSensorPhase(kSensorPhase);
     angleMotor.setInverted(kMotorInvert);
     angleMotor.configNominalOutputForward(0, kTimeoutMs);
     angleMotor.configNominalOutputReverse(0, kTimeoutMs);
     angleMotor.configPeakOutputForward(1, kTimeoutMs);
     angleMotor.configPeakOutputReverse(-1, kTimeoutMs);
-    angleMotor.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs);
+    angleMotor.configAllowableClosedloopError(kPIDLoopIdx, 10, kTimeoutMs);
+    angleMotor.config_kP(0, 1);
 
     driveMotor.set(0.0);
     angleMotor.set(ControlMode.Disabled, 0.0);
@@ -62,19 +63,25 @@ public class DriveModule {
     driveMotor.set(0.0);
   }
 
+  /**
+   * Not being used
+   * @return 0
+   */
   public double getRawAbsEncoder(){
-    return absEncoder.getVoltage();
+    return 0;//absEncoder.getVoltage();
   }
 
   /**
+   * Not being used
+   * 
    * This returns a value 0-5 that has been rotated so that 0 is the passed in adjusted value
-   * @return Value between 0-5V
+   * @return returns 0 //Value between 0-5V
    */
   public double getAdjustedAbsEncoder(){
     if (getRawAbsEncoder() < encoder_offset) {
-      return (5-(getRawAbsEncoder()-encoder_offset));
+      return 0;//(5-(getRawAbsEncoder()-encoder_offset));
     } else {
-      return (getRawAbsEncoder()-encoder_offset);
+      return 0;//(getRawAbsEncoder()-encoder_offset);
     }
   }
 
@@ -105,6 +112,7 @@ public class DriveModule {
     return (getEncoder() / countPerHalfRevolution) - getOffset();
   }
 
+
   public void setAngle(double goal) {
     long curr = System.currentTimeMillis();
 
@@ -122,8 +130,10 @@ public class DriveModule {
     }
 
     goal += getOffset();
+    
     set_encoder_count = goal * countPerHalfRevolution;
     angleMotor.set(ControlMode.Position, set_encoder_count);
+    
   }
 
   /**
@@ -165,5 +175,9 @@ public class DriveModule {
     angleMotor.config_kD(0, kD);
     angleMotor.config_kF(0, kF);
     angleMotor.config_IntegralZone(0, kIzone);
+  }
+
+  public double getDriveEncoder(){
+    return driveMotor.getEncoder().getPosition();
   }
 }

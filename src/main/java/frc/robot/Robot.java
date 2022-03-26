@@ -5,21 +5,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Sync_Encoder;
-import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
-import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
 import frc.robot.commands.Shoot.AutoShootGroup;
-import frc.robot.commands.Shoot.LoadShooterCommand;
-import frc.robot.commands.Shoot.ShootCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -125,6 +118,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
     SmartDashboard.putNumber("Gyro Dispalcement Z", drive.getZDisplacement());
 
+    //Drive Encoder Values on Dashboard
+    SmartDashboard.putNumber("FR Drive Encoder", drive.frontRight.getDriveEncoder());
+    SmartDashboard.putNumber("FL Drive Encoder", drive.frontLeft.getDriveEncoder());
+    SmartDashboard.putNumber("BR Drive Encoder", drive.backRight.getDriveEncoder());
+    SmartDashboard.putNumber("BL Drive Encoder", drive.backLeft.getDriveEncoder());
+
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
@@ -220,7 +219,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // new HomeCommandGroup().start();
-    //new Sync_Encoder();
+    //TODO: Remove the following init
+    new Sync_Encoder();
   }
 
   /**

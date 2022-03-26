@@ -74,14 +74,14 @@ public class RobotMap {
 
   /* ---- PID Tuning for Drivetrain ---- */
 
-  public static double kP = 15.0;
-  public static double kI = 0.0;
-  public static double kD = 0.0;
+  public static double kP = 11;  //BF 12.0 FL 9.0
+  public static double kI = 0.0015;   //BL 0.0 FL 0.0  0.005
+  public static double kD = 0.0;   //BL 0.0 FL 0.0  0.0005
   public static double kF = 0.0;
-  public static int kIzone = 0;
+  public static int kIzone = 50;
   // public static double kPeakOutput = 1.0;
 
-  public static boolean kSensorPhase = true;
+  public static boolean kSensorPhase = false;
   public static boolean kMotorInvert = false;
 
   public static final Gains legGains = new Gains(15, 0.0, 0.0, 0.2, 0, 1.0);
@@ -101,7 +101,7 @@ public class RobotMap {
   public static final double encoderStepPerRev = 28;
   public static final double gearBox = 71;
   public static final double lastStep = 40 / 48.0;
-  public static final double countPerHalfRevolution = encoderStepPerRev / 2 * gearBox * lastStep;
+  public static final double countPerHalfRevolution = 1028/2;//encoderStepPerRev / 2 * gearBox * lastStep;
 
   /* ---- Debounce Timers ---- */
 

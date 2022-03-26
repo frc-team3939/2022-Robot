@@ -34,6 +34,6 @@ public class AutoShootGroup extends SequentialCommandGroup {
     double distanceFromLimelightToGoalInches = (RobotMap.goalHeightInches - RobotMap.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
     */
 
-    addCommands(new LimelightVisionToggle(false), new TurnToVision(Robot.drive), new AutoHood_Command() , new Auto_ShootSpeed_Command());
+    addCommands(new TurnToVision(Robot.drive), new AutoHood_Command() , new Auto_ShootSpeed_Command());
   }
 }

@@ -20,7 +20,7 @@ public class LimelightVisionToggle extends CommandBase {
   public void initialize() {
     if (t == true) {
       if (NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").getDouble(0) == 0)
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
       else 
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0); 
     } else {

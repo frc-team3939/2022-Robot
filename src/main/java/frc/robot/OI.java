@@ -155,12 +155,12 @@ public class OI {
     button23.whenPressed(new WinchPullPosition(0, true)); // TEST
     button24.whenPressed(new ResetEncoder());
     button25.whenPressed(new StopWinch()); // faster pull speed
-    button26.whenPressed(new MoveToAngleCommand(0, true));
+    button26.whenPressed(new ResetAngleCommand());
     button27.whenPressed(new ResetAngleCommand());
     button28.whenHeld(new ReverseEntireIntake());
     //button28.whenPressed(new HomeAngleLimitSwitchCommand());
-    button29.whenPressed(new ShootCommand(SmartDashboard.getNumber("Shooter Speed", 0)));
-    button210.whenPressed(new Turn_to_Angle_New(180, Robot.drive));
+    button29.whenPressed(new ExtendIntake());
+    button210.whenPressed(new RetractIntake());
     
     button31.whenPressed(new WinchPullPosition(205, false)); // go to top
     button32.whenPressed(new WinchPullPosition(0, false)); // go to zero

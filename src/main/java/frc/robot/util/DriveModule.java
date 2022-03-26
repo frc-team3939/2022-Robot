@@ -131,7 +131,7 @@ public class DriveModule {
 
     goal += getOffset();
     */
-    set_encoder_count = goal * countPerHalfRevolution + 105;
+    set_encoder_count = goal * countPerHalfRevolution;
     angleMotor.set(ControlMode.Position, set_encoder_count);
     
   }

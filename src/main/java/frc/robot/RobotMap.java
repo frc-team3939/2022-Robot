@@ -101,7 +101,7 @@ public class RobotMap {
   public static final double encoderStepPerRev = 28;
   public static final double gearBox = 71;
   public static final double lastStep = 40 / 48.0;
-  public static final double countPerHalfRevolution = 435;//encoderStepPerRev / 2 * gearBox * lastStep;
+  public static final double countPerHalfRevolution = 1028/2;//encoderStepPerRev / 2 * gearBox * lastStep;
 
   /* ---- Debounce Timers ---- */
 

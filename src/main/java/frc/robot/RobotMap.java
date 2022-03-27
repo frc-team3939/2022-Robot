@@ -89,6 +89,11 @@ public class RobotMap {
   public static final Gains liftGains = new Gains(7, 0.0002, 0.0, 0.2, 0, 1.0);
   public static final Gains shooterGains = new Gains(4, 0, 0.0, 0.2, 0, 1.0);
 
+  /* ---- Drivetrain Gear Ratios ---- */
+  public static final double inch_encoder_convert = (1/6.67) * (42);
+  // (1/GearRatio) * Encoder per Rev 
+  //Gear Ratio is including he size of the wheel got from Andy Mark
+  
   /* ---- Velocity and Acceleration for MotionMagic ---- */
 
   /* ---- Stage power for homing swerve modules ---- */

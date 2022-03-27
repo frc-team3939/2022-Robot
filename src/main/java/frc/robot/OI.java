@@ -137,9 +137,11 @@ public class OI {
     right.whenHeld(new DriveCommandSetValue(0, 0.3, 0, 0.5));
     down.whenHeld(new DriveCommandSetValue(-0.3, 0, 0, 0.5));
     left.whenHeld(new DriveCommandSetValue(0, -0.3, 0, 0.5));
+    button1.whileHeld(new ExtendIntake());
     button1.whileHeld(new RunMiddleAndIntake());
+    button1.whenReleased(new RetractIntake());
     
-    button3.whileHeld(new ShootCommandAngle(0.69466, -925));
+    button3.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.69466, -925), new ExtendRetractClimber(false)));
     //button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     // insert button 4 wall shot
     button4.whileHeld(new ParallelCommandGroup(new ExtendRetractClimber(false), new ShootCommandAngle(0.55, -240)));
@@ -148,14 +150,14 @@ public class OI {
     button7.whenPressed(new Reset_Gyro_Command());
     button8.whenPressed(new LimelightVisionToggle(true));
     button9.whenPressed(new HomeClimber());
-    button10.whileHeld(new ShootCommandAngle(0.55, -400)); // next to target
+    button10.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.55, -400), new ExtendRetractClimber(false))); // next to target
     button11.whileHeld(new AutoShootGroup());
     //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
     //button11.whileHeld(new AutoShootGroup()); 
     button12.whenPressed(new Sync_Encoder());
 
-    button21.whenPressed(new ExtendRetractClimber(true)); //ANGLES CLIJMBer ARMS
-    button22.whenPressed(new ExtendRetractClimber(false)); //UPRIGHTS CLIMBER ARMS
+    button21.whenPressed(new ExtendRetractClimber(true)); //upright CLIJMBer ARMS
+    button22.whenPressed(new ExtendRetractClimber(false)); //angle CLIMBER ARMS
     button23.whenPressed(new WinchPullPosition(0, true)); // TEST
     button24.whenPressed(new ResetEncoder());
     button25.whenPressed(new StopWinch()); // faster pull speed
@@ -166,7 +168,7 @@ public class OI {
     button29.whenPressed(new ExtendIntake());
     button210.whenPressed(new RetractIntake());
     
-    button31.whenPressed(new WinchPullPosition(205, false)); // go to top
+    button31.whenPressed(new WinchPullPosition(270, false)); // go to top
     button32.whenPressed(new WinchPullPosition(0, false)); // go to zero
     //button33.whenPressed();
     button34.whenPressed(new IncrementShooterSpeed(-0.05));

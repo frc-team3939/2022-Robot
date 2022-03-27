@@ -31,7 +31,7 @@ public class Auto_ShootSpeed_Command extends CommandBase {
     i= i + 1;
     //ss = 70;//(SmartDashboard.getNumber("Speed", 0)); //Delete when speed is decided on
     Robot.shooter.setshooterSpeed((.00081*SmartDashboard.getNumber("Target Distance", 0)) + .54058);
-    if(i > 75){
+    if(i > 50){
       Robot.shooter.feederSpeed(0.5);
       Robot.intake.runMiddleMotor(-1);
     } else if (i > 250) {

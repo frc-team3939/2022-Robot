@@ -11,6 +11,7 @@ public class ReverseEntireIntake extends CommandBase {
   /** Creates a new ReverseEntireIntake. */
   public ReverseEntireIntake() {
     addRequirements(Robot.intake);
+    addRequirements(Robot.shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -20,8 +21,9 @@ public class ReverseEntireIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.intake.runMiddleMotor(-1);
+    Robot.intake.runMiddleMotor(1);
     Robot.intake.intakeSpeed(-0.7);
+    Robot.shooter.feederSpeed(-0.5);
   }
 
   // Called once the command ends or is interrupted.

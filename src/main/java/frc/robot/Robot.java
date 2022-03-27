@@ -15,7 +15,6 @@ import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
 import frc.robot.commands.Shoot.AutoHood_Command;
-import frc.robot.commands.Shoot.AutoShootGroup;
 import frc.robot.commands.Shoot.Auto_ShootSpeed_Command;
 import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.subsystems.ClimberSubsystem;

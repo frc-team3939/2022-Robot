@@ -2,7 +2,6 @@ package frc.robot;
 
 import java.lang.Math;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -11,8 +10,6 @@ import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.LimelightVisionToggle;
 import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
-import frc.robot.commands.TurnToVision;
-import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.RetractIntake;
 import frc.robot.commands.Intake.ReverseEntireIntake;

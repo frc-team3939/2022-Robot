@@ -5,37 +5,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.PID_DrivetrainSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DrivetoDistance_Command extends PIDCommand {
-  /** Creates a new DrivetoDistance_Command. */
+public class DriveToDistance extends PIDCommand {
+  /** Creates a new DriveToDistance. */
   /**
-   * Drives to a specific encoder count
-   * @param drive pass in the drivetrain from the robot
-   * @param encoder_position encoder position that you want to go to relative to current postion
+   * Drives the robot to the selected encoder position
+   * @param encoder_counts Number of encoder counts to drive (The Value needs to be >= 0)
    */
-  public DrivetoDistance_Command(PID_DrivetrainSubsystem drive, double encoder_position) {
+  public DriveToDistance(double encoder_counts) {
     super(
         // The controller that the command will use
-        new PIDController(RobotMap.kP, RobotMap.kI, RobotMap.kD),
+        new PIDController(RobotMap.distancekP, RobotMap.distancekI, RobotMap.distancekD),
         // This should return the measurement
-        drive::getDriveEncoder,
+        Robot.drive::getDriveEncoder,
         // This should return the setpoint (can also be a constant)
-        encoder_position,
+        encoder_counts,
         // This uses the output
         output -> {
-          drive.drive(output, 0, 0, 1);
+          Robot.drive.drive(-output, 0, 0, 1);
         });
-
-        addRequirements(Robot.drive);
-        getController().setTolerance(2);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.drive);
+    getController().setTolerance(0.125);
     // Configure additional PID options by calling `getController` here.
   }
 

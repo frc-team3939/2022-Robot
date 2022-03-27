@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.DriveCommandSetValue;
+import frc.robot.commands.DriveToDistanceGroup;
 import frc.robot.commands.LimelightVisionToggle;
 import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
@@ -144,7 +145,7 @@ public class OI {
     button4.whileHeld(new ParallelCommandGroup(new ExtendRetractClimber(false), new ShootCommandAngle(0.55, -240)));
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
-    button7.whenPressed(new Reset_Gyro_Command());
+    button7.whenPressed(new DriveToDistanceGroup(20)); // drives forward 20 inches
     button8.whenPressed(new LimelightVisionToggle(true));
     button9.whenPressed(new HomeClimber());
     button10.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.55, -400), new ExtendRetractClimber(false))); // next to target

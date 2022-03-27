@@ -79,6 +79,12 @@ public class RobotMap {
   public static double kD = 0.0;   //BL 0.0 FL 0.0  0.0005
   public static double kF = 0.0;
   public static int kIzone = 50;
+
+  /* PID Tuning for Drive To Distance */
+
+  public static double distancekP = 0.05; 
+  public static double distancekI = 0.04;   
+  public static double distancekD = 0.0;
   // public static double kPeakOutput = 1.0;
 
   public static boolean kSensorPhase = false;
@@ -90,7 +96,7 @@ public class RobotMap {
   public static final Gains shooterGains = new Gains(4, 0, 0.0, 0.2, 0, 1.0);
 
   /* ---- Drivetrain Gear Ratios ---- */
-  public static final double inch_encoder_convert = (1/6.67) * (42);
+  public static final double inch_encoder_convert = (7.33/12.57);
   // (1/GearRatio) * Encoder per Rev 
   //Gear Ratio is including he size of the wheel got from Andy Mark
   

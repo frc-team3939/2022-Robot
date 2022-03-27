@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 import static frc.robot.RobotMap.*;
 
@@ -19,6 +20,7 @@ import static frc.robot.RobotMap.*;
 public class DriveModule {
   CANSparkMax driveMotor;
   TalonSRX angleMotor;
+  SensorCollection sensor;
 
   AnalogInput absEncoder;
 
@@ -52,6 +54,8 @@ public class DriveModule {
 
     driveMotor.set(0.0);
     angleMotor.set(ControlMode.Disabled, 0.0);
+
+    sensor = new SensorCollection(angleMotor);
 
     encoder_offset = encoderoffset;
 
@@ -179,5 +183,13 @@ public class DriveModule {
 
   public double getDriveEncoder(){
     return driveMotor.getEncoder().getPosition();
+  }
+
+  public void resetDriveEncoder(){
+    driveMotor.getEncoder().setPosition(0);
+  }
+
+  public double getRawAngleEncoder() {
+    return sensor.getAnalogInRaw();
   }
 }

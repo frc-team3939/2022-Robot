@@ -17,6 +17,9 @@ public class DriveCommandSetValue extends CommandBase {
   double s;
   double r;
   double speedMult;
+
+  int schedule_count = 0;
+
   public DriveCommandSetValue(double forward, double strafe, double rotation, double speedMultiplier) {
     addRequirements(Robot.drive);
     f = forward;
@@ -30,16 +33,8 @@ public class DriveCommandSetValue extends CommandBase {
    */
   @Override
   public void initialize() {
-    /*drive.frontRight.setAngle(1);
-    drive.frontLeft.setAngle(1);
-    drive.backLeft.setAngle(1);
-    drive.backRight.setAngle(1);
-
-    drive.frontRight.setSpeed(0);
-    drive.frontLeft.setSpeed(0);
-    drive.backLeft.setSpeed(0);
-    drive.backRight.setSpeed(0);
-    */
+    // All on scale -1.0 to 1.0
+    Robot.drive.drive(f, s, r, speedMult);
   }
 
   /**
@@ -48,16 +43,10 @@ public class DriveCommandSetValue extends CommandBase {
    */
   @Override
   public void execute() {
-    // All on scale -1.0 to 1.0
-    Robot.drive.drive(f, s, r, speedMult);
   }
-
-  /**
-   * Always false, Always run
-   */
   
   public boolean isFinished() {
-    return false;
+    return true;
   }
 
   protected void end() {

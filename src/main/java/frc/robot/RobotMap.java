@@ -54,10 +54,10 @@ public class RobotMap {
   public final static int RightFrontEncoderId = 2;
   public final static int RightBackEncoderId = 3;
 
-  public final static double RightFrontEncoderOffset = -.218; // original -.261
-  public final static double LeftFrontEncoderOffset = -2.1933; //original -2.247
-  public final static double RightBackEncoderOffset = 2.501; // original 2.427   2.501
-  public final static double LeftBackEncoderOffset = 0.530; //original -.687    0.519
+  public final static int RightFrontEncoderOffset = -477; // original -.261
+  public final static int LeftFrontEncoderOffset = -63; //original -2.247
+  public final static int RightBackEncoderOffset = -1041; // original 2.427   2.501
+  public final static int LeftBackEncoderOffset = -627; //original -.687    0.519
 
   /* ---- Size Constants ---- */
   public static final int kSlotIdx = 0;
@@ -127,5 +127,6 @@ public class RobotMap {
   public static final double goalHeightInches = 104.0;
   public static final double limelightLensHeightInches = 23.0;
   public static final double limelightMountAngleDegrees = 19.0;
+
 
 }

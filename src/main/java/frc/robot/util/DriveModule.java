@@ -145,11 +145,11 @@ public class DriveModule {
 
   /**
    * Sets the encoder postion
-   * @param angle Expects an input between -1 and 1
+   * @param encoder_pos Expects an integer encoder count
    */
-  public void setEncoder(double angle) {
-    int steps = (int) (angle * countPerHalfRevolution);
-    angleMotor.setSelectedSensorPosition(steps);
+  public void setEncoder(int encoder_pos) {
+    angleMotor.setSelectedSensorPosition(encoder_pos);
+    offset_revs = 0;
   }
 
   public void move(double speed, double angle) {

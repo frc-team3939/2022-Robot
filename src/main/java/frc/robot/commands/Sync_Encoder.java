@@ -17,11 +17,11 @@ public class Sync_Encoder extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.drive.frontLeft.setEncoder(.5);
+    /*Robot.drive.frontLeft.setEncoder(.5);
     Robot.drive.frontRight.setEncoder(.5);
     Robot.drive.backLeft.setEncoder(-.5);
     Robot.drive.backRight.setEncoder(-.5);
-
+*/
     /*Robot.drive.frontLeft.setEncoder((Robot.drive.frontLeft.getAdjustedAbsEncoder()/2.5)-1);
     Robot.drive.frontRight.setEncoder((Robot.drive.frontRight.getAdjustedAbsEncoder()/2.5)-1);
     Robot.drive.backLeft.setEncoder((Robot.drive.backLeft.getAdjustedAbsEncoder()/2.5)-1);

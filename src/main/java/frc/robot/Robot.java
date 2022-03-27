@@ -57,6 +57,13 @@ public class Robot extends TimedRobot {
     shooter = new ShooterSubsystem();
     climber = new ClimberSubsystem();
     m_oi = new OI();
+
+    //Initilizing Wheel Position for Swerve
+    drive.frontRight.setEncoder((int)drive.frontRight.getEncoder()+RobotMap.RightFrontEncoderOffset);
+    drive.frontLeft.setEncoder((int)drive.frontLeft.getEncoder()+RobotMap.LeftFrontEncoderOffset);
+    drive.backRight.setEncoder((int)drive.backRight.getEncoder()+RobotMap.RightBackEncoderOffset);
+    drive.backLeft.setEncoder((int)drive.backLeft.getEncoder()+RobotMap.LeftBackEncoderOffset);
+
     CommandScheduler.getInstance().setDefaultCommand(drive, new DriveCommand(drive));
     SmartDashboard.putNumber("Shooter Speed Testing", 0);
     SmartDashboard.putNumber("Shooter Angle", 0);

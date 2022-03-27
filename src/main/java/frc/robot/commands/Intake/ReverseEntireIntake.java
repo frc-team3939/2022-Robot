@@ -21,7 +21,7 @@ public class ReverseEntireIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.intake.runMiddleMotor(1);
+    Robot.intake.runMiddleMotor(0.25);
     Robot.intake.intakeSpeed(-0.7);
     Robot.shooter.feederSpeed(-0.5);
   }

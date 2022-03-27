@@ -41,11 +41,11 @@ public class RunMiddleAndIntake extends CommandBase {
     }  
     if (Robot.intake.isMiddleLimitActivated() == true) {
       Robot.intake.intakeSpeed(.75);
-      Robot.intake.runMiddleMotor(-1);
+      Robot.intake.runMiddleMotor(-0.25);
     }
     if (Robot.intake.isMiddleLimitActivated() == false && Robot.shooter.feederLimitCheck() == false) {
       Robot.intake.intakeSpeed(.75);
-      Robot.intake.runMiddleMotor(-1);
+      Robot.intake.runMiddleMotor(-0.25);
     }
   }
 

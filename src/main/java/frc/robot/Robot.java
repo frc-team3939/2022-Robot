@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     shooter = new ShooterSubsystem();
     climber = new ClimberSubsystem();
     m_oi = new OI();
-
+    timer = new Timer();
     //Initilizing Wheel Position for Swerve
     drive.frontRight.setEncoder((int)drive.frontRight.getEncoder()+RobotMap.RightFrontEncoderOffset);
     drive.frontLeft.setEncoder((int)drive.frontLeft.getEncoder()+RobotMap.LeftFrontEncoderOffset);
@@ -206,7 +206,9 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
     
-    if (timer.get() < 2) {
+    if (timer.get() < 1){
+      CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-1, 0, 0, 0));
+    } else if (timer.get() < 2) {
       CommandScheduler.getInstance().schedule(new ExtendIntake(), new ExtendRetractClimber(false));
     } else if (timer.get() < 8.4) {
       CommandScheduler.getInstance().schedule(new RunMiddleAndIntake());

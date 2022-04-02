@@ -1,14 +1,20 @@
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.AutonomousGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.Sync_Encoder;
+import frc.robot.commands.Turn_to_Angle_Command;
+import frc.robot.commands.Intake.ExtendIntake;
+import frc.robot.commands.Intake.IntakeRunVariableSpeed;
+import frc.robot.commands.Shoot.LoadShooterCommand;
+import frc.robot.commands.Shoot.ShootCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
@@ -31,8 +37,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intake;
   public static OI m_oi;
   public static ClimberSubsystem climber;
-  int n = 0;
-  Timer timer = new Timer();
+  public Timer timer;
   // private Ultrasonic sonic = new Ultrasonic(4, 4);
 
   /**
@@ -49,13 +54,6 @@ public class Robot extends TimedRobot {
     shooter = new ShooterSubsystem();
     climber = new ClimberSubsystem();
     m_oi = new OI();
-
-    //Initilizing Wheel Position for Swerve
-    drive.frontRight.setEncoder((int)drive.frontRight.getRawAngleEncoder()+RobotMap.RightFrontEncoderOffset);
-    drive.frontLeft.setEncoder((int)drive.frontLeft.getRawAngleEncoder()+RobotMap.LeftFrontEncoderOffset);
-    drive.backRight.setEncoder((int)drive.backRight.getRawAngleEncoder()+RobotMap.RightBackEncoderOffset);
-    drive.backLeft.setEncoder((int)drive.backLeft.getRawAngleEncoder()+RobotMap.LeftBackEncoderOffset);
-
     CommandScheduler.getInstance().setDefaultCommand(drive, new DriveCommand(drive));
     SmartDashboard.putNumber("Shooter Speed Testing", 0);
     SmartDashboard.putNumber("Shooter Angle", 0);
@@ -72,8 +70,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
     SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     //SmartDashboard.putNumber("Camera", 1);
-    CameraServer.startAutomaticCapture();
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
   }
 
   /**
@@ -123,12 +119,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Gyro Dispalcement Y", drive.getYDisplacement());
     SmartDashboard.putNumber("Gyro Dispalcement Z", drive.getZDisplacement());
 
-    //Drive Encoder Values on Dashboard
-    SmartDashboard.putNumber("FR Drive Encoder", drive.frontRight.getDriveEncoder());
-    SmartDashboard.putNumber("FL Drive Encoder", drive.frontLeft.getDriveEncoder());
-    SmartDashboard.putNumber("BR Drive Encoder", drive.backRight.getDriveEncoder());
-    SmartDashboard.putNumber("BL Drive Encoder", drive.backLeft.getDriveEncoder());
-
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
@@ -149,10 +139,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Angle off from Goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
     SmartDashboard.putNumber("Tv", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
     // SmartDashboard.putNumber("Left Leg Encoder", legs.getLeftLeg());
-    SmartDashboard.putNumber("BL Rev", Robot.drive.backLeft.getOffset());
-    SmartDashboard.putNumber("BR Rev", Robot.drive.backRight.getOffset());
-    SmartDashboard.putNumber("FL Rev", Robot.drive.frontLeft.getOffset());
-    SmartDashboard.putNumber("FR Rev", Robot.drive.frontRight.getOffset());
     // SmartDashboard.putNumber("Right Leg Encoder", legs.getRightLeg());
 
     // SmartDashboard.putNumber("Camera Position", cam1.getLocation());
@@ -191,22 +177,45 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    Robot.drive.angleReset();
-    CommandScheduler.getInstance().schedule(new AutonomousGroup());
-    CommandScheduler.getInstance().run();
+    /*drive.frontRight.setEncoder(.5);
+    drive.frontLeft.setEncoder(.5);
+    drive.backRight.setEncoder(-.5);
+    drive.backRight.setEncoder(-.5);
+*/
+    new Sync_Encoder();
+    timer.reset();
+    timer.start();
+    
+    new ExtendIntake();
   }
 
   /**
    * This function is called periodically during autonomous.
    */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    CommandScheduler.getInstance().run();
+    
+    if (timer.get() < 0.5) {
+      Robot.drive.drive(1, 0, 0, 0.25); //forward 25%
+    } else if (timer.get() < 3) {
+      Robot.drive.drive(1, 0, 0, 0.15); //forward 15% and start intake
+      new IntakeRunVariableSpeed(0.5, false);
+    } else if (timer.get() < 5) {
+      new ParallelCommandGroup(new IntakeRunVariableSpeed(0, false), new Turn_to_Angle_Command(180));
+    } else if (timer.get() < 12) {
+      new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125, true));
+    } else {
+      new ShootCommand(0);
+    }
+    
+    
+  }
  
   @Override
   public void teleopInit() {
     // new HomeCommandGroup().start();
-    //TODO: Remove the following init
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    new Sync_Encoder();
   }
 
   /**

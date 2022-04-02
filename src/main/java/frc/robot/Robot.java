@@ -9,12 +9,17 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.Turn_to_Angle_Command;
+import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
+import frc.robot.commands.Intake.RunMiddleAndIntake;
+import frc.robot.commands.Shoot.AutoShootGroup;
 import frc.robot.commands.Shoot.LoadShooterCommand;
 import frc.robot.commands.Shoot.ShootCommand;
+import frc.robot.commands.climber.ExtendRetractClimber;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PID_DrivetrainSubsystem;
@@ -185,8 +190,6 @@ public class Robot extends TimedRobot {
     new Sync_Encoder();
     timer.reset();
     timer.start();
-    
-    new ExtendIntake();
   }
 
   /**
@@ -196,20 +199,19 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
     
-    if (timer.get() < 0.5) {
-      Robot.drive.drive(1, 0, 0, 0.25); //forward 25%
-    } else if (timer.get() < 3) {
-      Robot.drive.drive(1, 0, 0, 0.15); //forward 15% and start intake
-      new IntakeRunVariableSpeed(0.5, false);
-    } else if (timer.get() < 5) {
-      new ParallelCommandGroup(new IntakeRunVariableSpeed(0, false), new Turn_to_Angle_Command(180));
-    } else if (timer.get() < 12) {
-      new ParallelCommandGroup(new AutoShootCommandGroup(), new LoadShooterCommand(0.3, 125, true));
-    } else {
-      new ShootCommand(0);
+    if (timer.get() < 2) {
+      CommandScheduler.getInstance().schedule(new ExtendIntake(), new ExtendRetractClimber(false));
+    } else if (timer.get() < 8.4) {
+      CommandScheduler.getInstance().schedule(new RunMiddleAndIntake());
+      if (timer.get() < 5) {
+        CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-0.25, 0, 0, 0.8));
+      } else if (timer.get() < 8.3) {
+        CommandScheduler.getInstance().schedule(true, new Turn_to_Angle_New(180, Robot.drive));
+      } 
+    } else if (timer.get() < 15) {
+      CommandScheduler.getInstance().schedule(new AutoShootGroup());
     }
-    
-    
+    CommandScheduler.getInstance().run();
   }
  
   @Override

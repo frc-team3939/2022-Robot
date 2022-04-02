@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class Sync_Encoder extends CommandBase {
   /** Creates a new Sync_Encoder. */
@@ -17,10 +18,10 @@ public class Sync_Encoder extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.drive.frontLeft.setEncoder((int)(Robot.drive.frontLeft.getAdjustedAbsEncoder()/2.5)-1);
-    Robot.drive.frontRight.setEncoder((int)(Robot.drive.frontRight.getAdjustedAbsEncoder()/2.5)-1);
-    Robot.drive.backLeft.setEncoder((int)(Robot.drive.backLeft.getAdjustedAbsEncoder()/2.5)-1);
-    Robot.drive.backRight.setEncoder((int)(Robot.drive.backRight.getAdjustedAbsEncoder()/2.5)-1);
+    Robot.drive.frontRight.setEncoder((int)Robot.drive.frontRight.getRawAngleEncoder()+RobotMap.RightFrontEncoderOffset);
+    Robot.drive.frontLeft.setEncoder((int)Robot.drive.frontLeft.getRawAngleEncoder()+RobotMap.LeftFrontEncoderOffset);
+    Robot.drive.backRight.setEncoder((int)Robot.drive.backRight.getRawAngleEncoder()+RobotMap.RightBackEncoderOffset);
+    Robot.drive.backLeft.setEncoder((int)Robot.drive.backLeft.getRawAngleEncoder()+RobotMap.LeftBackEncoderOffset);
     Robot.drive.frontLeft.fixOffset();
     Robot.drive.frontRight.fixOffset();
     Robot.drive.backLeft.fixOffset();

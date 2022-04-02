@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
@@ -52,7 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // new HomeCommandGroup().start();
-    // CameraServer.startAutomaticCapture(0);
+    CameraServer.startAutomaticCapture(0);
     // shooter = new (subsystem here)
     drive = new PID_DrivetrainSubsystem();
     intake = new IntakeSubsystem();

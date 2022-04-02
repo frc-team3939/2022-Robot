@@ -12,12 +12,15 @@ import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
 import frc.robot.commands.Sync_Encoder;
+import frc.robot.commands.TurnToVision;
 import frc.robot.commands.Turn_to_Angle_Command;
 import frc.robot.commands.Turn_to_Angle_New;
 import frc.robot.commands.Intake.ExtendIntake;
 import frc.robot.commands.Intake.IntakeRunVariableSpeed;
 import frc.robot.commands.Intake.RunMiddleAndIntake;
+import frc.robot.commands.Shoot.AutoHood_Command;
 import frc.robot.commands.Shoot.AutoShootGroup;
+import frc.robot.commands.Shoot.Auto_ShootSpeed_Command;
 import frc.robot.commands.Shoot.LoadShooterCommand;
 import frc.robot.commands.Shoot.ShootCommand;
 import frc.robot.commands.climber.ExtendRetractClimber;
@@ -209,17 +212,18 @@ public class Robot extends TimedRobot {
     
     if (timer.get() < 1){
       CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-1, 0, 0, 0));
-    } else if (timer.get() < 2) {
       CommandScheduler.getInstance().schedule(new ExtendIntake(), new ExtendRetractClimber(false));
-    } else if (timer.get() < 8.4) {
+    } else if (timer.get() < 6.8) {
       CommandScheduler.getInstance().schedule(new RunMiddleAndIntake());
-      if (timer.get() < 5) {
+      if (timer.get() < 4) {
         CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-0.25, 0, 0, 0.8));
-      } else if (timer.get() < 8.3) {
+      } else if (timer.get() < 6.7) {
         CommandScheduler.getInstance().schedule(true, new Turn_to_Angle_New(180, Robot.drive));
       } 
+    } else if (timer.get() < 8) {
+      CommandScheduler.getInstance().schedule(new TurnToVision(Robot.drive), new AutoHood_Command()); 
     } else if (timer.get() < 15) {
-      CommandScheduler.getInstance().schedule(new AutoShootGroup());
+      CommandScheduler.getInstance().schedule(new Auto_ShootSpeed_Command());
     }
     CommandScheduler.getInstance().run();
   }

@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -7,7 +8,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.cameraserver.CameraServer;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
@@ -62,10 +62,10 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     timer = new Timer();
     //Initilizing Wheel Position for Swerve
-    drive.frontRight.setEncoder((int)drive.frontRight.getEncoder()+RobotMap.RightFrontEncoderOffset);
-    drive.frontLeft.setEncoder((int)drive.frontLeft.getEncoder()+RobotMap.LeftFrontEncoderOffset);
-    drive.backRight.setEncoder((int)drive.backRight.getEncoder()+RobotMap.RightBackEncoderOffset);
-    drive.backLeft.setEncoder((int)drive.backLeft.getEncoder()+RobotMap.LeftBackEncoderOffset);
+    drive.frontRight.setEncoder((int)drive.frontRight.getRawAngleEncoder()+RobotMap.RightFrontEncoderOffset);
+    drive.frontLeft.setEncoder((int)drive.frontLeft.getRawAngleEncoder()+RobotMap.LeftFrontEncoderOffset);
+    drive.backRight.setEncoder((int)drive.backRight.getRawAngleEncoder()+RobotMap.RightBackEncoderOffset);
+    drive.backLeft.setEncoder((int)drive.backLeft.getRawAngleEncoder()+RobotMap.LeftBackEncoderOffset);
     
     CommandScheduler.getInstance().setDefaultCommand(drive, new DriveCommand(drive));
     SmartDashboard.putNumber("Shooter Speed Testing", 0);

@@ -154,27 +154,27 @@ public class OI {
     //button11.whileHeld(new AutoShootGroup()); 
     button12.whenPressed(new Sync_Encoder());
 
-    button21.whenPressed(new ExtendRetractClimber(true)); //upright CLIJMBer ARMS
-    button22.whenPressed(new ExtendRetractClimber(false)); //angle CLIMBER ARMS
-    button23.whenPressed(new WinchPullPosition(0, true)); // TEST
-    button24.whenPressed(new ResetEncoder());
+    button21.whenPressed(new WinchPullPosition(300, false)); //upright CLIJMBer ARMS
+    button22.whenPressed(new ExtendRetractClimber(true)); //angle CLIMBER ARMS
+    button23.whenPressed(new ExtendIntake()); // TEST
+    button24.whileHeld(new RunMiddleAndIntake());
     button25.whenPressed(new StopWinch()); // faster pull speed
-    button26.whenPressed(new ResetAngleCommand());
-    button27.whileHeld(new ShootCommandAngle(1, -1200)); // hail mary BREAK GLASS IN CASE OF EMERGENCY
-    button28.whenHeld(new ReverseEntireIntake());
+    button26.whenPressed(new WinchPullPosition(0, false));
+    button27.whenPressed(new ExtendRetractClimber(false)); // hail mary BREAK GLASS IN CASE OF EMERGENCY
+    button28.whenPressed(new RetractIntake());
     //button28.whenPressed(new HomeAngleLimitSwitchCommand());
-    button29.whenPressed(new ExtendIntake());
-    button210.whenPressed(new RetractIntake());
+    button29.whenPressed(new RetractIntake());
+    //button210.whenPressed(new RetractIntake());
     
-    button31.whenPressed(new WinchPullPosition(270, false)); // go to top
-    button32.whenPressed(new WinchPullPosition(0, false)); // go to zero
+    button31.whenPressed(new HomeClimber()); // go to top
+    button32.whenPressed(new WinchPullPosition(0, true)); // go to zero
     //button33.whenPressed();
-    button34.whenPressed(new IncrementShooterSpeed(-0.05));
-    button35.whenPressed(new ShootCommand(0));
-    button36.whenPressed(new MoveToAngleCommand(0, true));
-    button37.whenPressed(new HomeAngleLimitSwitchCommand());
-    button38.whenPressed(new IncrementHoodAngle(100));
-    button39.whenPressed(new IncrementHoodAngle(-100)); 
+    //button34.whenPressed(new IncrementShooterSpeed(-0.05));
+    //button35.whenPressed(new ShootCommand(0));
+    button36.whenPressed(new HomeAngleLimitSwitchCommand());
+    button37.whenPressed(new ResetAngleCommand());
+    //button38.whenPressed(new IncrementHoodAngle(100));
+    //button39.whenPressed(new IncrementHoodAngle(-100)); 
     button310.whenPressed(new StopAngleMotor());
     /*button31.whenPressed(new ShooterSpeedCommand(0.2, 1, false)); //FULL POWER
     button32.whenPressed(new RunMiddle(false, 0)); //runs middle motor

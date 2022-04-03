@@ -125,7 +125,7 @@ public class RobotMap {
   /* ---- Turn Controller PID Tuning ---- */
   // autoshoot
   public static final double turnkP = 0.018; // 0.035
-  public static final double turnkI = 0.003; // 0.00825  0.00225
+  public static final double turnkI = 0.002; // 0.00825  0.00225
   public static final double turnkD = 0.000000002; // 0.001
   public static final double turnkF = 0.00;
   public static final double turnToleracne = 0.5f;

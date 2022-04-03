@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.commandgroups.AutoShootCommandGroup;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveCommandSetValue;
+import frc.robot.commands.Reset_Gyro_Command;
 import frc.robot.commands.Sync_Encoder;
 import frc.robot.commands.TurnToVision;
 import frc.robot.commands.Turn_to_Angle_Command;
@@ -47,6 +48,7 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public static ClimberSubsystem climber;
   public Timer timer;
+  int n;
   // private Ultrasonic sonic = new Ultrasonic(4, 4);
 
   /**
@@ -201,6 +203,8 @@ public class Robot extends TimedRobot {
     //new Sync_Encoder();
     timer.reset();
     timer.start();
+    n = 0;
+    CommandScheduler.getInstance().schedule(new Reset_Gyro_Command());
   }
 
   /**
@@ -213,17 +217,20 @@ public class Robot extends TimedRobot {
     if (timer.get() < 1){
       CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-1, 0, 0, 0));
       CommandScheduler.getInstance().schedule(new ExtendIntake(), new ExtendRetractClimber(false));
-    } else if (timer.get() < 6.8) {
+    } else if (timer.get() < 5.4) {
       CommandScheduler.getInstance().schedule(new RunMiddleAndIntake());
-      if (timer.get() < 4) {
+      if (timer.get() < 3) {
         CommandScheduler.getInstance().schedule(new DriveCommandSetValue(-0.25, 0, 0, 0.8));
-      } else if (timer.get() < 6.7) {
+      } else if (timer.get() < 5.3) {
         CommandScheduler.getInstance().schedule(true, new Turn_to_Angle_New(180, Robot.drive));
       } 
-    } else if (timer.get() < 8) {
+    } else if (timer.get() < 6.3) {
       CommandScheduler.getInstance().schedule(new TurnToVision(Robot.drive), new AutoHood_Command()); 
     } else if (timer.get() < 15) {
-      CommandScheduler.getInstance().schedule(new Auto_ShootSpeed_Command());
+      if (n == 0) {
+        CommandScheduler.getInstance().schedule(new Auto_ShootSpeed_Command());
+        n = 1;
+      }
     }
     CommandScheduler.getInstance().run();
   }

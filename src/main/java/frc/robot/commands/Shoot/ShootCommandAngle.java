@@ -34,9 +34,9 @@ public class ShootCommandAngle extends CommandBase {
     i= i + 1;
     //ss = 70;//(SmartDashboard.getNumber("Speed", 0)); //Delete when speed is decided on
     Robot.shooter.setshooterSpeed(ss);
-    if(i > 50){
+    if(i > 70){
       Robot.shooter.feederSpeed(0.5);
-      Robot.intake.runMiddleMotor(.75);
+      Robot.intake.runMiddleMotor(.55);
     } else if (i > 250) {
       Robot.intake.runMiddleMotor(0);
     }

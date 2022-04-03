@@ -31,6 +31,7 @@ public class ReverseEntireIntake extends CommandBase {
   public void end(boolean interrupted) {
     Robot.intake.runMiddleMotor(0);
     Robot.intake.intakeSpeed(0);
+    Robot.shooter.feederSpeed(0);
   }
 
   // Returns true when the command should end.

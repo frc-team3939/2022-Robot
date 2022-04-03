@@ -139,16 +139,16 @@ public class OI {
     button1.whileHeld(new RunMiddleAndIntake());
     button1.whenReleased(new RetractIntake());
     
-    button3.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.69466, -925), new ExtendRetractClimber(false)));
+    button3.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.699, -1100), new ExtendRetractClimber(false)));
     //button4.whenPressed(new TurnToVision(Robot.drive)); // autoshoot but no shoot values yet
     // insert button 4 wall shot
     button4.whileHeld(new ParallelCommandGroup(new ExtendRetractClimber(false), new ShootCommandAngle(0.55, -240)));
     button5.whenPressed(new ExtendIntake()); // extend intake
     button6.whenPressed(new RetractIntake()); // retract intake
-    button7.whenPressed(new DriveToDistanceGroup(20)); // drives forward 20 inches
-    button8.whenPressed(new LimelightVisionToggle(true));
+    //button7.whenPressed(new DriveToDistanceGroup(20)); // drives forward 20 inches
+    //button8.whenPressed(new LimelightVisionToggle(true));
     button9.whenPressed(new HomeClimber());
-    button10.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.55, -400), new ExtendRetractClimber(false))); // next to target
+    button10.whileHeld(new ParallelCommandGroup(new ShootCommandAngle(0.60, -650), new ExtendRetractClimber(false))); // next to target
     button11.whileHeld(new AutoShootGroup());
     //button11.whileHeld(new AutoShootGroup(SmartDashboard.getNumber("Target Distance", 0)));
     //button11.whileHeld(new AutoShootGroup()); 
@@ -163,7 +163,7 @@ public class OI {
     button27.whenPressed(new ExtendRetractClimber(false)); // hail mary BREAK GLASS IN CASE OF EMERGENCY
     button28.whenPressed(new RetractIntake());
     //button28.whenPressed(new HomeAngleLimitSwitchCommand());
-    button29.whenPressed(new RetractIntake());
+    button29.whileHeld(new ReverseEntireIntake());
     //button210.whenPressed(new RetractIntake());
     
     button31.whenPressed(new HomeClimber()); // go to top
